@@ -26,20 +26,32 @@ function renderEntry(entry) {
   var finalCard = document.createElement('div');
   var column = document.createElement('div');
   var header = document.createElement('h3');
-  var author = document.createElement('p');
-  var title = document.createElement('p');
+  var boldAuthor = document.createElement('b');
+  var title1 = document.createElement('span');
+  var boldTitle = document.createElement('b');
+  var author1 = document.createElement('span');
+  var title = document.createElement('b');
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
   var bookImage = entry.book_image;
 
   var numberHeading = document.createTextNode('#' + entry.rank);
-  var authorEntry = document.createTextNode('Author: ' + entry.author);
-  var titleEntry = document.createTextNode('Title: ' + entry.title);
-  header.appendChild(numberHeading);
-  author.appendChild(authorEntry);
-  title.appendChild(titleEntry);
+  var authorSlot = document.createTextNode('Author: '); // entry.author
+  var titleEntry = document.createTextNode('Title: '); // entry.title
+  var authorNode = document.createTextNode(entry.author);
+  var titleNode = document.createTextNode(entry.title);
 
-  finalCard.setAttribute('class', 'display-card');
+  author1.appendChild(authorNode);
+  title1.appendChild(titleNode);
+
+  boldAuthor.appendChild(authorSlot);
+  boldTitle.appendChild(titleEntry);
+  header.appendChild(numberHeading);
+  title.appendChild(boldTitle);
+
+  // author.appendChild(authorEntry);
+
+  finalCard.setAttribute('class', 'card-container');
   header.setAttribute('class', 'card-header');
   column.setAttribute('class', 'column-full');
   image.setAttribute('src', bookImage);
@@ -47,8 +59,10 @@ function renderEntry(entry) {
 
   finalCard.appendChild(header);
   finalCard.appendChild(image);
-  cardTextHolder.appendChild(author);
+  cardTextHolder.appendChild(boldAuthor);
+  cardTextHolder.appendChild(authorNode);
   cardTextHolder.appendChild(title);
+  cardTextHolder.appendChild(titleNode);
   finalCard.appendChild(cardTextHolder);
   return finalCard;
 }

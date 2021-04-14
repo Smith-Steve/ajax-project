@@ -6,7 +6,8 @@
   padding: 0 1.5rem;
 }
 
-.row {
+.row,
+#presentation-row {
   display: flex;
   flex-wrap: wrap;
 }
@@ -16,32 +17,21 @@
   width: 100%;
 }
 
-.card-container {
-  padding: 0.5rem;
-  flex-basis: 100%;
-}
-
-@media (min-width: 500px) {
-  .card-container {
-    flex-basis: 100%;
-  }
-}
-
 @media (min-width: 760px) {
+  .card-container {
+    flex-basis: calc(100% / 6);
+  }
+
   .container-header {
     max-width: 900px;
   }
 
   .container {
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .column-full {
     padding: 0 0.75rem;
-  }
-
-  #presentation-row {
-    flex-basis: calc(100% / 5);
   }
 
   .column-half {
