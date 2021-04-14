@@ -22,6 +22,20 @@ button {
   text-align: right;
 }
 
+.display-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+}
+
+img {
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+  display: block;
+}
+
 h1 {
   display: inline;
 }
@@ -31,4 +45,9 @@ h3 {
   color: black;
   display: inline-block;
   margin-left: 2rem;
+}
+
+h3.card-header {
+  display: block;
+  text-align: center;
 }
