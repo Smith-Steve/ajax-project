@@ -14,7 +14,7 @@ function requestData(apiKey) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject.books;
-    for (var i = 0; i < 10; i++) {
+    for (var i = 9; i > -1; i--) {
       var book = renderEntry(booksArray[i]);
       $row.appendChild(book);
     }
@@ -23,53 +23,48 @@ function requestData(apiKey) {
 }
 
 function renderEntry(entry) {
-  var finalCard = document.createElement('div');
-  var row1 = document.createElement('row');
-  var row2 = document.createElement('row');
+  var card = document.createElement('div');
+  var firstRow = document.createElement('row');
+  var secondRow = document.createElement('row');
   var header = document.createElement('h3');
   var boldAuthor = document.createElement('b');
-  var title1 = document.createElement('span');
-  var boldTitle = document.createElement('b');
-  var author1 = document.createElement('span');
-  var title = document.createElement('b');
+  var titleSpan = document.createElement('span');
+  var titleParagraphElement = document.createElement('p');
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
   var bookImage = entry.book_image;
 
   var numberHeading = document.createTextNode('#' + entry.rank);
   var authorSlot = document.createTextNode('Author: '); // entry.author
-  var titleEntry = document.createTextNode('Title: '); // entry.title
+  var titleEntry = document.createTextNode('Title:  '); // entry.title
   var authorNode = document.createTextNode(entry.author);
   var titleNode = document.createTextNode(entry.title);
 
-  author1.appendChild(authorNode);
-  title1.appendChild(titleNode);
-
   boldAuthor.appendChild(authorSlot);
-  boldTitle.appendChild(titleEntry);
+
+  titleSpan.appendChild(titleEntry);
+  // titleSpan.appendChild(titleNode);
+  titleParagraphElement.appendChild(titleEntry);
+
+  titleParagraphElement.appendChild(titleSpan);
   header.appendChild(numberHeading);
-  title.appendChild(boldTitle);
+  titleParagraphElement.appendChild(titleNode);
 
-  // author.appendChild(authorEntry);
+  titleSpan.appendChild(titleEntry);
 
-  finalCard.setAttribute('class', 'card-container');
+  card.setAttribute('class', 'card-container');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
-  boldTitle.setAttribute('class', 'title');
+  titleSpan.setAttribute('class', 'title');
 
-  finalCard.appendChild(header);
-  finalCard.appendChild(image);
-  row1.appendChild(boldAuthor);
-  row1.appendChild(authorNode);
-  cardTextHolder.appendChild(row1);
-  // cardTextHolder.appendChild(boldAuthor); row1
-  // cardTextHolder.appendChild(authorNode);
-  row2.appendChild(boldTitle);
-  row2.appendChild(titleNode);
-  cardTextHolder.appendChild(row2);
-  // cardTextHolder.appendChild(boldTitle); row2
-  // cardTextHolder.appendChild(titleNode);
-  finalCard.appendChild(cardTextHolder);
-  return finalCard;
+  card.appendChild(header);
+  card.appendChild(image);
+  firstRow.appendChild(boldAuthor);
+  firstRow.appendChild(authorNode);
+  cardTextHolder.appendChild(firstRow);
+  secondRow.appendChild(titleParagraphElement);
+  cardTextHolder.appendChild(secondRow);
+  card.appendChild(cardTextHolder);
+  return card;
 }

@@ -14,8 +14,10 @@ header {
 button {
   background-color: #4a91fc;
   color: white;
+  font-weight: bold;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 10px;
+  margin: -1;
 }
 
 .align-right {
@@ -27,20 +29,33 @@ button {
   border-radius: 0.75rem;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 0.5rem;
-  margin: 0.2rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
 }
+
+/* .card-container:nth-of-type(5n) {
+  margin: 0 0 0 0;
+} */
 
 .card-text-holder {
   font-size: 0.9vw;
 }
 
 b {
-  display: inline-block;
-  margin-top: 0.3rem;
+  display: block flow-root;
 }
 
 b.title {
   display: block;
+}
+
+span.title {
+  font-weight: bold;
+  display: inline;
+}
+
+p {
+  font-size: 0.9vw;
 }
 
 img {
@@ -54,10 +69,13 @@ h1 {
   display: inline;
 }
 
-h2,
 h3 {
   color: black;
   display: inline-block;
+}
+
+h2 {
+  color: white;
 }
 
 h3.card-header {
