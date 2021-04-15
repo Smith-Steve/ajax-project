@@ -22,7 +22,7 @@
 }
 
 @media (min-width: 760px) {
-  .card-container {
+  .card {
     flex-basis: calc(100% / 5);
   }
 

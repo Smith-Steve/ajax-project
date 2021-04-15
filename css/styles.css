@@ -17,6 +17,7 @@ button {
   font-weight: bold;
   padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: 10px;
+  margin-top: 10px;
 }
 
 .align-right {
@@ -28,24 +29,16 @@ button {
   border-radius: 0.75rem;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 2rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-left: 0.1rem;
-  margin-right: 0.1rem;
 }
 
-/* .card-container:nth-of-type(5n) {
-  margin: 0 0 0 0; saving for later.
-} */
+.card {
+  padding: 0.1rem;
+}
 
 .card-text-holder {
   font-size: 0.9vw;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-left: 0.5rem;
-}
-
-b {
-  display: block flow-root;
 }
 
 b.title {
@@ -64,7 +57,8 @@ p {
 img {
   margin-left: auto;
   margin-right: auto;
-  width: 85%;
+  width: 175px;
+  height: 250px;
   display: block;
 }
 

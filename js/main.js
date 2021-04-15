@@ -3,9 +3,6 @@ var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-
 requestData(apiKey);
 var $row = document.querySelector('#presentation-row');
 
-// var $row = document.querySelector('.row');
-// 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz'
-
 function requestData(apiKey) {
   var request = new XMLHttpRequest();
   request.open('GET', defaultCall + apiKey, true);
@@ -23,6 +20,7 @@ function requestData(apiKey) {
 }
 
 function renderEntry(entry) {
+  var outerCard = document.createElement('div');
   var card = document.createElement('div');
   var firstRow = document.createElement('row');
   var secondRow = document.createElement('row');
@@ -35,15 +33,16 @@ function renderEntry(entry) {
   var bookImage = entry.book_image;
 
   var numberHeading = document.createTextNode('#' + entry.rank);
-  var authorSlot = document.createTextNode('Author: '); // entry.author
-  var titleEntry = document.createTextNode('Title:  '); // entry.title
+  var authorSlot = document.createTextNode('Author: ');
+  var titleEntry = document.createTextNode('Title:  ');
   var authorNode = document.createTextNode(entry.author);
+  var titleSpanElement = document.createElement('span');
   var titleNode = document.createTextNode(entry.title);
 
   boldAuthor.appendChild(authorSlot);
 
   titleSpan.appendChild(titleEntry);
-  // titleSpan.appendChild(titleNode);
+  titleSpanElement.appendChild(titleNode);
   titleParagraphElement.appendChild(titleEntry);
 
   titleParagraphElement.appendChild(titleSpan);
@@ -52,6 +51,7 @@ function renderEntry(entry) {
 
   titleSpan.appendChild(titleEntry);
 
+  outerCard.setAttribute('class', 'card');
   card.setAttribute('class', 'card-container');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
@@ -66,5 +66,6 @@ function renderEntry(entry) {
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
   card.appendChild(cardTextHolder);
-  return card;
+  outerCard.appendChild(card);
+  return outerCard;
 }
