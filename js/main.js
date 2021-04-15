@@ -11,7 +11,7 @@ function requestData(apiKey) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject.books;
-    for (var i = 9; i > -1; i--) {
+    for (var i = 9; i >= 0; i--) {
       var book = renderEntry(booksArray[i]);
       $row.appendChild(book);
     }
