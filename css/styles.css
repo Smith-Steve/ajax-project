@@ -26,7 +26,7 @@ button {
 
 .card-container {
   background-color: white;
-  border-radius: 0.75rem;
+  border-radius: 2rem;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 2rem;
 }
@@ -52,6 +52,14 @@ span.title {
 
 p {
   font-size: 0.9vw;
+}
+
+span.title-font-size {
+  font-size: 0.6vw;
+}
+
+span.author-font-size {
+  font-size: 0.7vw;
 }
 
 img {

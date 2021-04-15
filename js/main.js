@@ -27,6 +27,8 @@ function renderEntry(entry) {
   var header = document.createElement('h3');
   var boldAuthor = document.createElement('b');
   var titleSpan = document.createElement('span');
+  var authorSpan = document.createElement('span');
+  var titleSpanElement = document.createElement('span');
   var titleParagraphElement = document.createElement('p');
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
@@ -36,23 +38,24 @@ function renderEntry(entry) {
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
   var authorNode = document.createTextNode(entry.author);
-  var titleSpanElement = document.createElement('span');
   var titleNode = document.createTextNode(entry.title);
 
   boldAuthor.appendChild(authorSlot);
 
-  titleSpan.appendChild(titleEntry);
-  titleSpanElement.appendChild(titleNode);
-  titleParagraphElement.appendChild(titleEntry);
+  authorSpan.appendChild(authorNode);
 
   titleParagraphElement.appendChild(titleSpan);
   header.appendChild(numberHeading);
-  titleParagraphElement.appendChild(titleNode);
+  titleSpanElement.appendChild(titleNode);
+  titleParagraphElement.appendChild(titleSpanElement);
 
   titleSpan.appendChild(titleEntry);
 
   outerCard.setAttribute('class', 'card');
+  titleSpanElement.setAttribute('class', 'title-font-size');
+
   card.setAttribute('class', 'card-container');
+  authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
@@ -61,7 +64,7 @@ function renderEntry(entry) {
   card.appendChild(header);
   card.appendChild(image);
   firstRow.appendChild(boldAuthor);
-  firstRow.appendChild(authorNode);
+  firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
