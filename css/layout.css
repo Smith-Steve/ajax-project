@@ -15,13 +15,19 @@
   width: 100%;
 }
 
+@media (min-width: 500px) {
+  .card-container {
+    flex-basis: 100%;
+  }
+}
+
 @media (min-width: 760px) {
   .card-container {
     flex-basis: calc(100% / 5);
   }
 
   .container-header {
-    max-width: 1200px;
+    max-width: 1300px;
   }
 
   .container {
