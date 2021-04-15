@@ -24,7 +24,8 @@ function requestData(apiKey) {
 
 function renderEntry(entry) {
   var finalCard = document.createElement('div');
-  var column = document.createElement('div');
+  var row1 = document.createElement('row');
+  var row2 = document.createElement('row');
   var header = document.createElement('h3');
   var boldAuthor = document.createElement('b');
   var title1 = document.createElement('span');
@@ -53,16 +54,22 @@ function renderEntry(entry) {
 
   finalCard.setAttribute('class', 'card-container');
   header.setAttribute('class', 'card-header');
-  column.setAttribute('class', 'column-full');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
+  boldTitle.setAttribute('class', 'title');
 
   finalCard.appendChild(header);
   finalCard.appendChild(image);
-  cardTextHolder.appendChild(boldAuthor);
-  cardTextHolder.appendChild(authorNode);
-  cardTextHolder.appendChild(title);
-  cardTextHolder.appendChild(titleNode);
+  row1.appendChild(boldAuthor);
+  row1.appendChild(authorNode);
+  cardTextHolder.appendChild(row1);
+  // cardTextHolder.appendChild(boldAuthor); row1
+  // cardTextHolder.appendChild(authorNode);
+  row2.appendChild(boldTitle);
+  row2.appendChild(titleNode);
+  cardTextHolder.appendChild(row2);
+  // cardTextHolder.appendChild(boldTitle); row2
+  // cardTextHolder.appendChild(titleNode);
   finalCard.appendChild(cardTextHolder);
   return finalCard;
 }
