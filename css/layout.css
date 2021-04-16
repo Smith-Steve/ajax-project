@@ -1,5 +1,6 @@
 
 .container,
+.container-author-results,
 .container-search,
 .container-header {
   margin: 0 auto;
@@ -37,7 +38,8 @@
   }
 
   .container,
-  .container-search {
+  .container-search,
+  .container-author-results {
     max-width: 1300px;
   }
 

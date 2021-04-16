@@ -1,15 +1,15 @@
 var apiKey = 'vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz';
 var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=';
-var developAuthorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=Cormac%McCarthy&api-key=${apiKey}`;
+var display = true;
 requestData(apiKey);
 var $row = document.querySelector('#presentation-row');
+var $rowAuthor = document.querySelector('#presentation-row-author');
 var $homeContainer = document.querySelector('.container');
 var $searchContainer = document.querySelector('.container-search');
 var $authorContainer = document.querySelector('.container-author-results');
-var $homeButton = document.getElementById('button1');
+var $homeButton = document.getElementById('button2');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $inputForm = document.getElementById('input-form');
-var display = true;
 var displayAuthor = true;
 
 function authorRequestData(event) {
@@ -23,15 +23,14 @@ function authorRequestData(event) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
-    console.log(booksArray);
-    for (var i = booksArray.length; i >= 0; i--) {
+    for (var i = booksArray.length - 1; i >= 0; i--) {
       var book = renderAuthorEntry(booksArray[i]);
-      $row.appendChild(book);
+      $rowAuthor.appendChild(book);
     }
+    setTimeout(displayChangeAuthor, 700);
   });
   $inputForm.reset();
   request.send(null);
-  displayChangeAuthor();
 }
 
 function generateFirstLastName(name) {
@@ -40,20 +39,21 @@ function generateFirstLastName(name) {
 }
 
 function requestData(apiKey) {
-  var request = new XMLHttpRequest();
-  request.open('GET', defaultCall + apiKey, true);
-  request.responseType = 'json';
-  request.addEventListener('load', function () {
-    var booksResponse = request.response;
-    console.log(booksResponse);
-    var booksResponseObject = booksResponse.results;
-    var booksArray = booksResponseObject.books;
-    for (var i = 9; i >= 0; i--) {
-      var book = renderEntry(booksArray[i]);
-      $row.appendChild(book);
-    }
-  });
-  request.send(null);
+  if (display === true) {
+    var request = new XMLHttpRequest();
+    request.open('GET', defaultCall + apiKey, true);
+    request.responseType = 'json';
+    request.addEventListener('load', function () {
+      var booksResponse = request.response;
+      var booksResponseObject = booksResponse.results;
+      var booksArray = booksResponseObject.books;
+      for (var i = 9; i >= 0; i--) {
+        var book = renderEntry(booksArray[i]);
+        $row.appendChild(book);
+      }
+    });
+    request.send(null);
+  }
 }
 
 function displayChange() {
