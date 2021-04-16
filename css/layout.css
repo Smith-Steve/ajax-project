@@ -1,7 +1,13 @@
 
 .container,
+.container-search,
 .container-header {
   margin: 0 auto;
+}
+
+.container-search {
+  text-align: center;
+  margin-top: 5rem;
 }
 
 .row,
@@ -30,7 +36,8 @@
     max-width: 1300px;
   }
 
-  .container {
+  .container,
+  .container-search {
     max-width: 1300px;
   }
 
