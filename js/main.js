@@ -22,8 +22,8 @@ function requestData(apiKey) {
 function renderEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
-  var firstRow = document.createElement('row');
-  var secondRow = document.createElement('row');
+  var firstRow = document.createElement('div');
+  var secondRow = document.createElement('div');
   var header = document.createElement('h3');
   var boldAuthor = document.createElement('b');
   var titleSpan = document.createElement('span');
@@ -55,6 +55,8 @@ function renderEntry(entry) {
   titleSpanElement.setAttribute('class', 'title-font-size');
 
   card.setAttribute('class', 'card-container');
+  firstRow.setAttribute('class', 'row display');
+  secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);

@@ -33,6 +33,7 @@ button {
 
 .card {
   padding: 0.1rem;
+  display: flex;
 }
 
 .card-text-holder {
@@ -86,4 +87,8 @@ h2 {
 h3.card-header {
   display: block;
   text-align: center;
+}
+
+.row.display {
+  display: inline;
 }
