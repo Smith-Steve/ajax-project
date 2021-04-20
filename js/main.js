@@ -19,9 +19,6 @@ var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
 
-// order for everything should be REGULAR Functionality, then Author Functionality, then Category Functionality.
-//  If functions do not have this sequence, it is because their functionality does not match these categories.
-
 function requestData(apiKey) {
   if (display === true) {
     var request = new XMLHttpRequest();
@@ -70,7 +67,7 @@ function categoryRequestData(event) {
   request.responseType = 'json';
   request.addEventListener('load', function () {
     var booksResponse = request.response;
-    var booksArray = booksResponse.results; // this is the array here. In the other functions its another level down. Don't get confused by this.
+    var booksArray = booksResponse.results;
     for (var i = 9; i >= 0; i--) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
@@ -84,7 +81,7 @@ function categoryRequestData(event) {
 function displayChange() {
   if (display === true) {
     $homeContainer.setAttribute('class', 'container hidden');
-    $searchContainer.setAttribute('class', 'container-search'); // This is the reason that we're exercising this function when display equals true. The others we're setting just to confirm.
+    $searchContainer.setAttribute('class', 'container-search');
     $authorContainer.setAttribute('class', 'container-author-results hidden');
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
     display = false;
@@ -97,9 +94,9 @@ function displayChange() {
 
 function displayChangeAuthor() {
   if (displayAuthor === true) {
-    $homeContainer.setAttribute('class', 'container hidden'); // this is already done.
-    $searchContainer.setAttribute('class', 'container-search hidden'); //
-    $authorContainer.setAttribute('class', 'container-author-results'); // This is the one we're making a change to.
+    $homeContainer.setAttribute('class', 'container hidden');
+    $searchContainer.setAttribute('class', 'container-search hidden');
+    $authorContainer.setAttribute('class', 'container-author-results');
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
     displayAuthor = false;
   } else {
@@ -116,12 +113,12 @@ function displayChangeCategory() {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results hidden');
-    $categoryContainer.setAttribute('class', 'container-category-results'); // This is the one that we're making a change to.
+    $categoryContainer.setAttribute('class', 'container-category-results');
     displayCategory = false;
   } else {
     var parentNode = document.getElementById('presentation-row-category');
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
-    removeCards(parentNode); // This should remove the cards AFTER the element has been closed. According to the documentation, they will still be stored in memory.
+    removeCards(parentNode);
     $homeContainer.setAttribute('class', 'container');
     displayCategory = true;
   }
@@ -292,22 +289,18 @@ function renderCategoryEntry(entry) {
   return outerCard;
 }
 
-// this function removes cards from closed author and category 'window'
 function removeCards(workingParentNode) {
   while (workingParentNode.querySelector('.card')) {
     workingParentNode.removeChild(workingParentNode.querySelector('.card'));
   }
 }
 
-// This function sets up the object that is used to insert interpolations into the actual string that is used for the final API call.
-// This function performs that action for categories.
 function generateCategorySearch(name) {
   var categoryName = {}; name = name.split(' ');
   categoryName.firstWord = name[0]; categoryName.secondWord = name[1];
   return categoryName;
 }
 
-// This function is the same as the above, except it does it for authors.
 function generateFirstLastName(name) {
   var authorName = {}; name = name.split(' '); authorName.firstName = name[0]; authorName.lastName = name[1];
   return authorName;
