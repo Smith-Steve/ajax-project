@@ -12,6 +12,7 @@ var $homeContainer = document.querySelector('.container');
 var $searchContainer = document.querySelector('.container-search');
 var $authorContainer = document.querySelector('.container-author-results');
 var $categoryContainer = document.querySelector('.container-category-results');
+var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeAuthorButton = document.getElementById('button2');
 var $returnHomeCategoryButton = document.getElementById('button3');
@@ -300,7 +301,6 @@ function reviewAddorNot(reviews) {
 
   row.setAttribute('class', 'row display');
   spanReviewPrompt.setAttribute('class', 'title');
-  // no known attributes to set for spanIcon Holder.
 
   row.appendChild(spanReviewPrompt);
   var reviewsNode = document.createTextNode('Reviews: ');
@@ -309,7 +309,7 @@ function reviewAddorNot(reviews) {
 
   var reviewsObject = reviews[0];
   for (var key in reviewsObject) {
-    if (reviewsObject[key]) {
+    if (reviewsObject[key] && reviewsObject[key] !== '') {
       var bookIcon = document.createElement('i');
       bookIcon.setAttribute('class', 'fa fa-book');
       var anchorElement = document.createElement('a');
@@ -320,6 +320,17 @@ function reviewAddorNot(reviews) {
       row.appendChild(spanIconHolder);
     }
   }
+
+  if (spanIconHolder.hasChildNodes($tags) === false) {
+
+    var noResults = document.createTextNode('No Results');
+    spanIconHolder.appendChild(noResults);
+    spanReviewPrompt.appendChild(spanIconHolder);
+
+    row.appendChild(spanIconHolder);
+    return row;
+  }
+
   return row;
 }
 
