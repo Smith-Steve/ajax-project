@@ -1,5 +1,5 @@
 var apiKey = 'vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz';
-var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=';
+var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?author=Bill%Clinton&api-key=';
 var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/823/sale-test.png?1586175097';
 var display = true;
 var displayAuthor = true;
@@ -12,6 +12,9 @@ var $homeContainer = document.querySelector('.container');
 var $searchContainer = document.querySelector('.container-search');
 var $authorContainer = document.querySelector('.container-author-results');
 var $categoryContainer = document.querySelector('.container-category-results');
+var $searchResultAuthor = document.getElementById('search-result-author');
+var $searchResultCategory = document.getElementById('search-result-category');
+var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeAuthorButton = document.getElementById('button2');
 var $returnHomeCategoryButton = document.getElementById('button3');
@@ -39,8 +42,9 @@ function requestData(apiKey) {
 
 function authorRequestData(event) {
   event.preventDefault();
-  var authorName = generateFirstLastName($inputForm.search.value);
-  var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName.firstName}%${authorName.lastName}&api-key=${apiKey}`;
+  var authorName = $inputForm.search.value;
+  var authorName1 = generateFirstLastName(authorName);
+  var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName1.firstName}%${authorName1.lastName}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
   request.open('GET', authorCall, true);
   request.responseType = 'json';
@@ -52,7 +56,7 @@ function authorRequestData(event) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
-    setTimeout(displayChangeAuthor, 700);
+    displayChangeAuthor(authorName);
   });
   $inputForm.reset();
   request.send(null);
@@ -60,6 +64,7 @@ function authorRequestData(event) {
 
 function categoryRequestData(event) {
   event.preventDefault();
+  var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
   var categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
@@ -72,7 +77,7 @@ function categoryRequestData(event) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
     }
-    setTimeout(displayChangeCategory, 700);
+    displayChangeCategory(categoryNameSearchInput);
   });
   $inputForm.reset();
   request.send();
@@ -92,11 +97,12 @@ function displayChange() {
   }
 }
 
-function displayChangeAuthor() {
+function displayChangeAuthor(authorName) {
   if (displayAuthor === true) {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results');
+    attachName(authorName);
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
     displayAuthor = false;
   } else {
@@ -108,12 +114,13 @@ function displayChangeAuthor() {
   }
 }
 
-function displayChangeCategory() {
+function displayChangeCategory(categoryName) {
   if (displayCategory === true) {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results hidden');
     $categoryContainer.setAttribute('class', 'container-category-results');
+    attachCategory(categoryName);
     displayCategory = false;
   } else {
     var parentNode = document.getElementById('presentation-row-category');
@@ -180,6 +187,16 @@ function renderEntry(entry) {
   return outerCard;
 }
 
+function attachName(name) {
+  var authorName = document.createTextNode(name);
+  $searchResultAuthor.appendChild(authorName);
+}
+
+function attachCategory(name) {
+  var categoryName = document.createTextNode(name);
+  $searchResultCategory.appendChild(categoryName);
+}
+
 function renderAuthorEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
@@ -191,9 +208,7 @@ function renderAuthorEntry(entry) {
   var authorSpan = document.createElement('span');
   var titleSpanElement = document.createElement('span');
   var titleParagraphElement = document.createElement('p');
-  var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
-  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
 
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
@@ -201,8 +216,8 @@ function renderAuthorEntry(entry) {
   var titleNode = document.createTextNode(entry.title);
 
   boldAuthor.appendChild(authorSlot);
-
   authorSpan.appendChild(authorNode);
+  var review = reviewAddorNot(entry.reviews);
 
   titleParagraphElement.appendChild(titleSpan);
   titleSpanElement.appendChild(titleNode);
@@ -218,17 +233,16 @@ function renderAuthorEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
-  image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
   card.appendChild(header);
-  card.appendChild(image);
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
+  cardTextHolder.appendChild(review);
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
@@ -236,6 +250,7 @@ function renderAuthorEntry(entry) {
 
 function renderCategoryEntry(entry) {
   var bookDetails = entry.book_details;
+  var reviews = entry.reviews;
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
   var firstRow = document.createElement('div');
@@ -246,14 +261,14 @@ function renderCategoryEntry(entry) {
   var authorSpan = document.createElement('span');
   var titleSpanElement = document.createElement('span');
   var titleParagraphElement = document.createElement('p');
-  var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
-  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
 
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
   var authorNode = document.createTextNode(bookDetails[0].author);
   var titleNode = document.createTextNode(bookDetails[0].title);
+
+  var thirdRow = reviewAddorNot(reviews);
 
   boldAuthor.appendChild(authorSlot);
 
@@ -273,17 +288,17 @@ function renderCategoryEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
-  image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
   card.appendChild(header);
-  card.appendChild(image);
+
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
+  cardTextHolder.appendChild(thirdRow);
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
@@ -293,6 +308,46 @@ function removeCards(workingParentNode) {
   while (workingParentNode.querySelector('.card')) {
     workingParentNode.removeChild(workingParentNode.querySelector('.card'));
   }
+}
+
+function reviewAddorNot(reviews) {
+  var row = document.createElement('row');
+  var spanReviewPrompt = document.createElement('span');
+  var spanIconHolder = document.createElement('span');
+
+  row.setAttribute('class', 'row display');
+  spanReviewPrompt.setAttribute('class', 'title');
+
+  row.appendChild(spanReviewPrompt);
+  var reviewsNode = document.createTextNode('Reviews: ');
+  spanReviewPrompt.appendChild(reviewsNode);
+  row.appendChild(spanIconHolder);
+
+  var reviewsObject = reviews[0];
+  for (var key in reviewsObject) {
+    if (reviewsObject[key]) {
+      var bookIcon = document.createElement('i');
+      bookIcon.setAttribute('class', 'fa fa-book');
+      var anchorElement = document.createElement('a');
+      var link = reviewsObject[key];
+      anchorElement.setAttribute('href', link);
+      anchorElement.append(bookIcon);
+      spanIconHolder.appendChild(anchorElement);
+      row.appendChild(spanIconHolder);
+    }
+  }
+
+  if (spanIconHolder.hasChildNodes($tags) === false) {
+
+    var noResults = document.createTextNode('No Results');
+    spanIconHolder.appendChild(noResults);
+    spanReviewPrompt.appendChild(spanIconHolder);
+
+    row.appendChild(spanIconHolder);
+    return row;
+  }
+
+  return row;
 }
 
 function generateCategorySearch(name) {
