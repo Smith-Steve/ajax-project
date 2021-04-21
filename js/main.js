@@ -56,7 +56,7 @@ function authorRequestData(event) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
-    setTimeout(displayChangeAuthor(authorName), 700);
+    displayChangeAuthor(authorName);
   });
   $inputForm.reset();
   request.send(null);
@@ -77,7 +77,7 @@ function categoryRequestData(event) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
     }
-    setTimeout(displayChangeCategory(categoryNameSearchInput), 700);
+    displayChangeCategory(categoryNameSearchInput);
   });
   $inputForm.reset();
   request.send();
@@ -325,7 +325,7 @@ function reviewAddorNot(reviews) {
 
   var reviewsObject = reviews[0];
   for (var key in reviewsObject) {
-    if (reviewsObject[key] && reviewsObject[key] !== '') {
+    if (reviewsObject[key]) {
       var bookIcon = document.createElement('i');
       bookIcon.setAttribute('class', 'fa fa-book');
       var anchorElement = document.createElement('a');
