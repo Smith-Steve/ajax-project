@@ -12,6 +12,8 @@ var $homeContainer = document.querySelector('.container');
 var $searchContainer = document.querySelector('.container-search');
 var $authorContainer = document.querySelector('.container-author-results');
 var $categoryContainer = document.querySelector('.container-category-results');
+var $searchResultAuthor = document.getElementById('search-result-author');
+var $searchResultCategory = document.getElementById('search-result-category');
 var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeAuthorButton = document.getElementById('button2');
@@ -40,8 +42,9 @@ function requestData(apiKey) {
 
 function authorRequestData(event) {
   event.preventDefault();
-  var authorName = generateFirstLastName($inputForm.search.value);
-  var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName.firstName}%${authorName.lastName}&api-key=${apiKey}`;
+  var authorName = $inputForm.search.value;
+  var authorName1 = generateFirstLastName(authorName);
+  var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName1.firstName}%${authorName1.lastName}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
   request.open('GET', authorCall, true);
   request.responseType = 'json';
@@ -53,7 +56,7 @@ function authorRequestData(event) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
-    setTimeout(displayChangeAuthor, 700);
+    setTimeout(displayChangeAuthor(authorName), 700);
   });
   $inputForm.reset();
   request.send(null);
@@ -61,6 +64,7 @@ function authorRequestData(event) {
 
 function categoryRequestData(event) {
   event.preventDefault();
+  var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
   var categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
@@ -73,7 +77,7 @@ function categoryRequestData(event) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
     }
-    setTimeout(displayChangeCategory, 700);
+    setTimeout(displayChangeCategory(categoryNameSearchInput), 700);
   });
   $inputForm.reset();
   request.send();
@@ -93,11 +97,12 @@ function displayChange() {
   }
 }
 
-function displayChangeAuthor() {
+function displayChangeAuthor(authorName) {
   if (displayAuthor === true) {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results');
+    attachName(authorName);
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
     displayAuthor = false;
   } else {
@@ -109,12 +114,13 @@ function displayChangeAuthor() {
   }
 }
 
-function displayChangeCategory() {
+function displayChangeCategory(categoryName) {
   if (displayCategory === true) {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results hidden');
     $categoryContainer.setAttribute('class', 'container-category-results');
+    attachCategory(categoryName);
     displayCategory = false;
   } else {
     var parentNode = document.getElementById('presentation-row-category');
@@ -179,6 +185,16 @@ function renderEntry(entry) {
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
+}
+
+function attachName(name) {
+  var authorName = document.createTextNode(name);
+  $searchResultAuthor.appendChild(authorName);
+}
+
+function attachCategory(name) {
+  var categoryName = document.createTextNode(name);
+  $searchResultCategory.appendChild(categoryName);
 }
 
 function renderAuthorEntry(entry) {

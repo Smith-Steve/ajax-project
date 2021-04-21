@@ -45,6 +45,12 @@ a {
   color: black;
 }
 
+span#search-result-author,
+span#search-result-category {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
 .fa.fa-book {
   margin-right: 0.5rem;
   margin-left: 0.1rem;
@@ -70,6 +76,7 @@ a {
 .card {
   padding: 0.1rem;
   display: flex;
+  margin-top: 0.5rem;
 }
 
 .card-text-holder {
@@ -110,6 +117,7 @@ img {
 h1,
 .row.display {
   display: inline;
+  margin-bottom: 1rem;
 }
 
 h3,
