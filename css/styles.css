@@ -41,6 +41,15 @@ button {
   margin-right: 7rem;
 }
 
+a {
+  color: black;
+}
+
+.fa.fa-book {
+  margin-right: 0.5rem;
+  margin-left: 0.1rem;
+}
+
 .searchButton {
   padding: 0.5rem 4rem 0.5rem 4rem;
   font-size: larger;

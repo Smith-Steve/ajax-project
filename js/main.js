@@ -1,5 +1,5 @@
 var apiKey = 'vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz';
-var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=';
+var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?author=Bill%Clinton&api-key=';
 var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/823/sale-test.png?1586175097';
 var display = true;
 var displayAuthor = true;
@@ -191,9 +191,7 @@ function renderAuthorEntry(entry) {
   var authorSpan = document.createElement('span');
   var titleSpanElement = document.createElement('span');
   var titleParagraphElement = document.createElement('p');
-  var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
-  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
 
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
@@ -201,8 +199,8 @@ function renderAuthorEntry(entry) {
   var titleNode = document.createTextNode(entry.title);
 
   boldAuthor.appendChild(authorSlot);
-
   authorSpan.appendChild(authorNode);
+  var review = reviewAddorNot(entry.reviews);
 
   titleParagraphElement.appendChild(titleSpan);
   titleSpanElement.appendChild(titleNode);
@@ -218,17 +216,16 @@ function renderAuthorEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
-  image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
   card.appendChild(header);
-  card.appendChild(image);
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
+  cardTextHolder.appendChild(review);
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
@@ -236,6 +233,7 @@ function renderAuthorEntry(entry) {
 
 function renderCategoryEntry(entry) {
   var bookDetails = entry.book_details;
+  var reviews = entry.reviews;
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
   var firstRow = document.createElement('div');
@@ -246,14 +244,14 @@ function renderCategoryEntry(entry) {
   var authorSpan = document.createElement('span');
   var titleSpanElement = document.createElement('span');
   var titleParagraphElement = document.createElement('p');
-  var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
-  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
 
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
   var authorNode = document.createTextNode(bookDetails[0].author);
   var titleNode = document.createTextNode(bookDetails[0].title);
+
+  var thirdRow = reviewAddorNot(reviews);
 
   boldAuthor.appendChild(authorSlot);
 
@@ -273,17 +271,17 @@ function renderCategoryEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
-  image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
   card.appendChild(header);
-  card.appendChild(image);
+
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
   cardTextHolder.appendChild(secondRow);
+  cardTextHolder.appendChild(thirdRow);
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
@@ -293,6 +291,36 @@ function removeCards(workingParentNode) {
   while (workingParentNode.querySelector('.card')) {
     workingParentNode.removeChild(workingParentNode.querySelector('.card'));
   }
+}
+
+function reviewAddorNot(reviews) {
+  var row = document.createElement('row');
+  var spanReviewPrompt = document.createElement('span');
+  var spanIconHolder = document.createElement('span');
+
+  row.setAttribute('class', 'row display');
+  spanReviewPrompt.setAttribute('class', 'title');
+  // no known attributes to set for spanIcon Holder.
+
+  row.appendChild(spanReviewPrompt);
+  var reviewsNode = document.createTextNode('Reviews: ');
+  spanReviewPrompt.appendChild(reviewsNode);
+  row.appendChild(spanIconHolder);
+
+  var reviewsObject = reviews[0];
+  for (var key in reviewsObject) {
+    if (reviewsObject[key]) {
+      var bookIcon = document.createElement('i');
+      bookIcon.setAttribute('class', 'fa fa-book');
+      var anchorElement = document.createElement('a');
+      var link = reviewsObject[key];
+      anchorElement.setAttribute('href', link);
+      anchorElement.append(bookIcon);
+      spanIconHolder.appendChild(anchorElement);
+      row.appendChild(spanIconHolder);
+    }
+  }
+  return row;
 }
 
 function generateCategorySearch(name) {
