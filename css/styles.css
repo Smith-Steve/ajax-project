@@ -56,6 +56,12 @@ span#search-result-category {
   margin-left: 0.1rem;
 }
 
+.far.fa-heart,
+.fas.fa-heart {
+  float: right;
+  color: red;
+}
+
 .searchButton {
   padding: 0.5rem 4rem 0.5rem 4rem;
   font-size: larger;
@@ -115,15 +121,19 @@ img {
 }
 
 h1,
-.row.display {
+.row.display,
+.row.header {
   display: inline;
-  margin-bottom: 1rem;
+}
+
+.row.header {
+  margin-left: 0.8rem;
 }
 
 h3,
 h3.card-header {
   color: black;
-  display: inline-block;
+  display: inline;
 }
 
 h2 {

@@ -4,7 +4,6 @@ var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/8
 var display = true;
 var displayAuthor = true;
 var displayCategory = true;
-requestData(apiKey);
 var $row = document.querySelector('#presentation-row');
 var $rowAuthor = document.querySelector('#presentation-row-author');
 var $rowCategory = document.getElementById('presentation-row-category');
@@ -17,7 +16,7 @@ var $searchResultCategory = document.getElementById('search-result-category');
 var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeAuthorButton = document.getElementById('button2');
-var $returnHomeCategoryButton = document.getElementById('button3');
+// var $returnHomeCategoryButton = document.getElementById('button3');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
@@ -52,7 +51,7 @@ function authorRequestData(event) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
-    for (var i = booksArray.length - 1; i >= 0; i--) {
+    for (var i = 9; i >= 0; i--) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
@@ -131,9 +130,20 @@ function displayChangeCategory(categoryName) {
   }
 }
 
+function attachName(name) {
+  var authorName = document.createTextNode(name);
+  $searchResultAuthor.appendChild(authorName);
+}
+
+function attachCategory(name) {
+  var categoryName = document.createTextNode(name);
+  $searchResultCategory.appendChild(categoryName);
+}
+
 function renderEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
+  var headerRow = document.createElement('div');
   var firstRow = document.createElement('div');
   var secondRow = document.createElement('div');
   var header = document.createElement('h3');
@@ -155,9 +165,18 @@ function renderEntry(entry) {
   boldAuthor.appendChild(authorSlot);
 
   authorSpan.appendChild(authorNode);
+  var iconElement = document.createElement('i');
+  var currentFavoritedBooks = data.entries;
+
+  if (currentFavoritedBooks.includes(entry.title)) {
+    iconElement.setAttribute('class', 'fas fa-heart');
+  } else {
+    iconElement.setAttribute('class', 'far fa-heart');
+  }
 
   titleParagraphElement.appendChild(titleSpan);
   header.appendChild(numberHeading);
+
   titleSpanElement.appendChild(titleNode);
   titleParagraphElement.appendChild(titleSpanElement);
 
@@ -167,6 +186,7 @@ function renderEntry(entry) {
   titleSpanElement.setAttribute('class', 'title-font-size');
 
   card.setAttribute('class', 'card-container');
+  headerRow.setAttribute('class', 'row header');
   firstRow.setAttribute('class', 'row display');
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
@@ -175,7 +195,9 @@ function renderEntry(entry) {
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
-  card.appendChild(header);
+  headerRow.appendChild(header);
+  headerRow.appendChild(iconElement);
+  card.appendChild(headerRow);
   card.appendChild(image);
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
@@ -185,16 +207,6 @@ function renderEntry(entry) {
   card.appendChild(cardTextHolder);
   outerCard.appendChild(card);
   return outerCard;
-}
-
-function attachName(name) {
-  var authorName = document.createTextNode(name);
-  $searchResultAuthor.appendChild(authorName);
-}
-
-function attachCategory(name) {
-  var categoryName = document.createTextNode(name);
-  $searchResultCategory.appendChild(categoryName);
 }
 
 function renderAuthorEntry(entry) {
@@ -314,15 +326,12 @@ function reviewAddorNot(reviews) {
   var row = document.createElement('row');
   var spanReviewPrompt = document.createElement('span');
   var spanIconHolder = document.createElement('span');
-
   row.setAttribute('class', 'row display');
   spanReviewPrompt.setAttribute('class', 'title');
-
   row.appendChild(spanReviewPrompt);
   var reviewsNode = document.createTextNode('Reviews: ');
   spanReviewPrompt.appendChild(reviewsNode);
   row.appendChild(spanIconHolder);
-
   var reviewsObject = reviews[0];
   for (var key in reviewsObject) {
     if (reviewsObject[key]) {
@@ -336,9 +345,7 @@ function reviewAddorNot(reviews) {
       row.appendChild(spanIconHolder);
     }
   }
-
   if (spanIconHolder.hasChildNodes($tags) === false) {
-
     var noResults = document.createTextNode('No Results');
     spanIconHolder.appendChild(noResults);
     spanReviewPrompt.appendChild(spanIconHolder);
@@ -346,8 +353,33 @@ function reviewAddorNot(reviews) {
     row.appendChild(spanIconHolder);
     return row;
   }
-
   return row;
+}
+
+function changeHeart(event) {
+  var $closestAncestor = event.target.closest(event.target.tagName);
+  var $closestCard = event.target.closest('.card');
+  var book = $closestCard.querySelector('.title-font-size').textContent;
+
+  var $targetClass = event.target.getAttribute('class');
+
+  if (event.target.tagName === 'I' && $targetClass === 'far fa-heart') {
+    $closestAncestor.setAttribute('class', 'fas fa-heart');
+    addStorage(data, book);
+  } else if (event.target.tagName === 'I' && $targetClass === 'fas fa-heart') {
+    $closestAncestor.setAttribute('class', 'far fa-heart');
+    removeStorage(data, book);
+  }
+
+}
+
+function addStorage(dataObject, book) {
+  dataObject.entries.push(book);
+}
+
+function removeStorage(dataObject, book) {
+  var index = dataObject.entries.indexOf(book);
+  dataObject.entries.splice(index, 1);
 }
 
 function generateCategorySearch(name) {
@@ -364,5 +396,8 @@ function generateFirstLastName(name) {
 $homeButton.addEventListener('click', displayChange);
 $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
+$row.addEventListener('click', changeHeart);
 $returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
-$returnHomeCategoryButton.addEventListener('click', displayChangeCategory);
+window.addEventListener('DOMContentLoaded', function () {
+  requestData(apiKey);
+});
