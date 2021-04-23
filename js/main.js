@@ -4,7 +4,6 @@ var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/8
 var display = true;
 var displayAuthor = true;
 var displayCategory = true;
-requestData(apiKey);
 var $row = document.querySelector('#presentation-row');
 var $rowAuthor = document.querySelector('#presentation-row-author');
 var $rowCategory = document.getElementById('presentation-row-category');
@@ -129,70 +128,6 @@ function displayChangeCategory(categoryName) {
     $homeContainer.setAttribute('class', 'container');
     displayCategory = true;
   }
-}
-
-function renderEntry(entry) {
-  var outerCard = document.createElement('div');
-  var card = document.createElement('div');
-  var headerRow = document.createElement('div');
-  var firstRow = document.createElement('div');
-  var secondRow = document.createElement('div');
-  var header = document.createElement('h3');
-  var boldAuthor = document.createElement('b');
-  var titleSpan = document.createElement('span');
-  var authorSpan = document.createElement('span');
-  var titleSpanElement = document.createElement('span');
-  var titleParagraphElement = document.createElement('p');
-  var image = document.createElement('img');
-  var cardTextHolder = document.createElement('div');
-  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
-
-  var numberHeading = document.createTextNode('#' + entry.rank);
-  var authorSlot = document.createTextNode('Author: ');
-  var titleEntry = document.createTextNode('Title:  ');
-  var authorNode = document.createTextNode(entry.author);
-  var titleNode = document.createTextNode(entry.title);
-
-  boldAuthor.appendChild(authorSlot);
-
-  authorSpan.appendChild(authorNode);
-  var iconElement = document.createElement('i');
-
-  iconElement.setAttribute('class', 'far fa-heart');
-
-  titleParagraphElement.appendChild(titleSpan);
-  header.appendChild(numberHeading);
-
-  titleSpanElement.appendChild(titleNode);
-  titleParagraphElement.appendChild(titleSpanElement);
-
-  titleSpan.appendChild(titleEntry);
-
-  outerCard.setAttribute('class', 'card');
-  titleSpanElement.setAttribute('class', 'title-font-size');
-
-  card.setAttribute('class', 'card-container');
-  headerRow.setAttribute('class', 'row header');
-  firstRow.setAttribute('class', 'row display');
-  secondRow.setAttribute('class', 'row display');
-  authorSpan.setAttribute('class', 'author-font-size');
-  header.setAttribute('class', 'card-header');
-  image.setAttribute('src', bookImage);
-  cardTextHolder.setAttribute('class', 'card-text-holder');
-  titleSpan.setAttribute('class', 'title');
-
-  headerRow.appendChild(header);
-  headerRow.appendChild(iconElement);
-  card.appendChild(headerRow);
-  card.appendChild(image);
-  firstRow.appendChild(boldAuthor);
-  firstRow.appendChild(authorSpan);
-  cardTextHolder.appendChild(firstRow);
-  secondRow.appendChild(titleParagraphElement);
-  cardTextHolder.appendChild(secondRow);
-  card.appendChild(cardTextHolder);
-  outerCard.appendChild(card);
-  return outerCard;
 }
 
 function attachName(name) {
@@ -352,15 +287,82 @@ function reviewAddorNot(reviews) {
   return row;
 }
 
+function renderEntry(entry) {
+  var outerCard = document.createElement('div');
+  var card = document.createElement('div');
+  var headerRow = document.createElement('div');
+  var firstRow = document.createElement('div');
+  var secondRow = document.createElement('div');
+  var header = document.createElement('h3');
+  var boldAuthor = document.createElement('b');
+  var titleSpan = document.createElement('span');
+  var authorSpan = document.createElement('span');
+  var titleSpanElement = document.createElement('span');
+  var titleParagraphElement = document.createElement('p');
+  var image = document.createElement('img');
+  var cardTextHolder = document.createElement('div');
+  var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
+
+  var numberHeading = document.createTextNode('#' + entry.rank);
+  var authorSlot = document.createTextNode('Author: ');
+  var titleEntry = document.createTextNode('Title:  ');
+  var authorNode = document.createTextNode(entry.author);
+  var titleNode = document.createTextNode(entry.title);
+
+  boldAuthor.appendChild(authorSlot);
+
+  authorSpan.appendChild(authorNode);
+  var iconElement = document.createElement('i');
+  var currentFavoritedBooks = data.entries;
+
+  // this is problem, should use includes()
+  console.log(currentFavoritedBooks);
+  console.log(currentFavoritedBooks.includes(entry.title));
+  if (currentFavoritedBooks.includes(entry.title)) {
+    iconElement.setAttribute('class', 'fas fa-heart');
+  } else {
+    iconElement.setAttribute('class', 'far fa-heart');
+  }
+
+  titleParagraphElement.appendChild(titleSpan);
+  header.appendChild(numberHeading);
+
+  titleSpanElement.appendChild(titleNode);
+  titleParagraphElement.appendChild(titleSpanElement);
+
+  titleSpan.appendChild(titleEntry);
+
+  outerCard.setAttribute('class', 'card');
+  titleSpanElement.setAttribute('class', 'title-font-size');
+
+  card.setAttribute('class', 'card-container');
+  headerRow.setAttribute('class', 'row header');
+  firstRow.setAttribute('class', 'row display');
+  secondRow.setAttribute('class', 'row display');
+  authorSpan.setAttribute('class', 'author-font-size');
+  header.setAttribute('class', 'card-header');
+  image.setAttribute('src', bookImage);
+  cardTextHolder.setAttribute('class', 'card-text-holder');
+  titleSpan.setAttribute('class', 'title');
+
+  headerRow.appendChild(header);
+  headerRow.appendChild(iconElement);
+  card.appendChild(headerRow);
+  card.appendChild(image);
+  firstRow.appendChild(boldAuthor);
+  firstRow.appendChild(authorSpan);
+  cardTextHolder.appendChild(firstRow);
+  secondRow.appendChild(titleParagraphElement);
+  cardTextHolder.appendChild(secondRow);
+  card.appendChild(cardTextHolder);
+  outerCard.appendChild(card);
+  return outerCard;
+}
+
 function changeHeart(event) {
-  // console.log('Event.target.tagName: ', event.target.tagName);
-  // console.log(event.target.getAttribute('class'));
   var $closestAncestor = event.target.closest(event.target.tagName);
   var $closestCard = event.target.closest('.card');
-  console.log($closestCard);
-
-  // console.log(event.path[2]);
-  // console.log();
+  var book = $closestCard.querySelector('.title-font-size').textContent;
 
   var $targetClass = event.target.getAttribute('class');
 
@@ -370,8 +372,6 @@ function changeHeart(event) {
     $closestAncestor.setAttribute('class', 'far fa-heart');
   }
 
-  var $currentBook = $closestCard.querySelector('.title-font-size').textContent;
-  console.log($currentBook);
 }
 
 function generateCategorySearch(name) {
@@ -388,5 +388,8 @@ function generateFirstLastName(name) {
 $homeButton.addEventListener('click', displayChange);
 $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
-$returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
 $row.addEventListener('click', changeHeart);
+$returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
+window.addEventListener('DOMContentLoaded', function () {
+  requestData(apiKey);
+});
