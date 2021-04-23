@@ -51,7 +51,7 @@ function authorRequestData(event) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
-    for (var i = booksArray.length - 1; i >= 0; i--) {
+    for (var i = 9; i >= 0; i--) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
