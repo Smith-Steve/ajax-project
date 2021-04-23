@@ -23,12 +23,6 @@
   width: 100%;
 }
 
-/* @media (min-width: 400px) {
-  .card-container {
-    flex-basis: 100%;
-  }
-} */
-
 @media screen and (min-width: 200px) {
   .card-container {
     flex-basis: 100%;
