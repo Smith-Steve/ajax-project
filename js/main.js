@@ -134,6 +134,7 @@ function displayChangeCategory(categoryName) {
 function renderEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
+  var headerRow = document.createElement('div');
   var firstRow = document.createElement('div');
   var secondRow = document.createElement('div');
   var header = document.createElement('h3');
@@ -155,9 +156,13 @@ function renderEntry(entry) {
   boldAuthor.appendChild(authorSlot);
 
   authorSpan.appendChild(authorNode);
+  var iconElement = document.createElement('i');
+
+  iconElement.setAttribute('class', 'far fa-heart');
 
   titleParagraphElement.appendChild(titleSpan);
   header.appendChild(numberHeading);
+
   titleSpanElement.appendChild(titleNode);
   titleParagraphElement.appendChild(titleSpanElement);
 
@@ -167,6 +172,7 @@ function renderEntry(entry) {
   titleSpanElement.setAttribute('class', 'title-font-size');
 
   card.setAttribute('class', 'card-container');
+  headerRow.setAttribute('class', 'row header');
   firstRow.setAttribute('class', 'row display');
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
@@ -175,7 +181,9 @@ function renderEntry(entry) {
   cardTextHolder.setAttribute('class', 'card-text-holder');
   titleSpan.setAttribute('class', 'title');
 
-  card.appendChild(header);
+  headerRow.appendChild(header);
+  headerRow.appendChild(iconElement);
+  card.appendChild(headerRow);
   card.appendChild(image);
   firstRow.appendChild(boldAuthor);
   firstRow.appendChild(authorSpan);
@@ -314,15 +322,12 @@ function reviewAddorNot(reviews) {
   var row = document.createElement('row');
   var spanReviewPrompt = document.createElement('span');
   var spanIconHolder = document.createElement('span');
-
   row.setAttribute('class', 'row display');
   spanReviewPrompt.setAttribute('class', 'title');
-
   row.appendChild(spanReviewPrompt);
   var reviewsNode = document.createTextNode('Reviews: ');
   spanReviewPrompt.appendChild(reviewsNode);
   row.appendChild(spanIconHolder);
-
   var reviewsObject = reviews[0];
   for (var key in reviewsObject) {
     if (reviewsObject[key]) {
@@ -336,9 +341,7 @@ function reviewAddorNot(reviews) {
       row.appendChild(spanIconHolder);
     }
   }
-
   if (spanIconHolder.hasChildNodes($tags) === false) {
-
     var noResults = document.createTextNode('No Results');
     spanIconHolder.appendChild(noResults);
     spanReviewPrompt.appendChild(spanIconHolder);
@@ -346,8 +349,29 @@ function reviewAddorNot(reviews) {
     row.appendChild(spanIconHolder);
     return row;
   }
-
   return row;
+}
+
+function changeHeart(event) {
+  // console.log('Event.target.tagName: ', event.target.tagName);
+  // console.log(event.target.getAttribute('class'));
+  var $closestAncestor = event.target.closest(event.target.tagName);
+  var $closestCard = event.target.closest('.card');
+  console.log($closestCard);
+
+  // console.log(event.path[2]);
+  // console.log();
+
+  var $targetClass = event.target.getAttribute('class');
+
+  if (event.target.tagName === 'I' && $targetClass === 'far fa-heart') {
+    $closestAncestor.setAttribute('class', 'fas fa-heart');
+  } else if (event.target.tagName === 'I' && $targetClass === 'fas fa-heart') {
+    $closestAncestor.setAttribute('class', 'far fa-heart');
+  }
+
+  var $currentBook = $closestCard.querySelector('.title-font-size').textContent;
+  console.log($currentBook);
 }
 
 function generateCategorySearch(name) {
@@ -365,4 +389,4 @@ $homeButton.addEventListener('click', displayChange);
 $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
 $returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
-$returnHomeCategoryButton.addEventListener('click', displayChangeCategory);
+$row.addEventListener('click', changeHeart);
