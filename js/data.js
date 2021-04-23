@@ -5,7 +5,6 @@ var data = {
   nextEntryId: 1
 };
 
-// these are confusing
 var previousToDoJSON = localStorage.getItem('favorited-books');
 
 if (previousToDoJSON !== null) {
