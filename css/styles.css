@@ -29,6 +29,16 @@ input:focus {
   display: none;
 }
 
+.card:hover {
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.02);
+}
+
+.card-container:hover {
+  background-color: rgb(200, 219, 248);
+  transition: 0.3s ease-in;
+}
+
 button {
   background-color: #4a91fc;
   color: white;
@@ -39,6 +49,14 @@ button {
   cursor: pointer;
   margin-left: 7rem;
   margin-right: 7rem;
+}
+
+button.modalButton {
+  margin-left: 0;
+  margin-right: 0;
+  position: absolute to .card;
+  left: 10px;
+  bottom: 10px;
 }
 
 a {
@@ -77,6 +95,7 @@ span#search-result-category {
   border-radius: 2rem;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 2rem;
+  margin-bottom: 1rem;
 }
 
 .card {

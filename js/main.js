@@ -146,6 +146,7 @@ function renderEntry(entry) {
   var headerRow = document.createElement('div');
   var firstRow = document.createElement('div');
   var secondRow = document.createElement('div');
+  var thirdRow = document.createElement('div');
   var header = document.createElement('h3');
   var boldAuthor = document.createElement('b');
   var titleSpan = document.createElement('span');
@@ -155,6 +156,13 @@ function renderEntry(entry) {
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
   var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
+
+  // <button type="submit" id="button1">SEARCH</button>
+
+  var button = document.createElement('button');
+  var buttonText = document.createTextNode('Open Profile');
+  button.setAttribute('class', 'modalButton');
+  button.appendChild(buttonText);
 
   var numberHeading = document.createTextNode('#' + entry.rank);
   var authorSlot = document.createTextNode('Author: ');
@@ -189,6 +197,7 @@ function renderEntry(entry) {
   headerRow.setAttribute('class', 'row header');
   firstRow.setAttribute('class', 'row display');
   secondRow.setAttribute('class', 'row display');
+  thirdRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
@@ -203,8 +212,10 @@ function renderEntry(entry) {
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
+  thirdRow.appendChild(button);
   cardTextHolder.appendChild(secondRow);
   card.appendChild(cardTextHolder);
+  card.appendChild(button);
   outerCard.appendChild(card);
   return outerCard;
 }
