@@ -16,14 +16,15 @@ var $searchResultCategory = document.getElementById('search-result-category');
 var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeAuthorButton = document.getElementById('button2');
-// var $returnHomeCategoryButton = document.getElementById('button3');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
 
+var request;
+
 function requestData(apiKey) {
   if (display === true) {
-    var request = new XMLHttpRequest();
+    request = new XMLHttpRequest();
     request.open('GET', defaultCall + apiKey, true);
     request.responseType = 'json';
     request.addEventListener('load', function () {
@@ -32,11 +33,13 @@ function requestData(apiKey) {
       var booksArray = booksResponseObject.books;
       for (var i = 9; i >= 0; i--) {
         var book = renderEntry(booksArray[i]);
+        event.target.book = book;
         $row.appendChild(book);
       }
     });
     request.send(null);
   }
+  return request;
 }
 
 function authorRequestData(event) {
@@ -74,6 +77,7 @@ function categoryRequestData(event) {
     var booksArray = booksResponse.results;
     for (var i = 9; i >= 0; i--) {
       var book = renderCategoryEntry(booksArray[i]);
+      window.book = book;
       $rowCategory.appendChild(book);
     }
     displayChangeCategory(categoryNameSearchInput);
@@ -159,11 +163,6 @@ function renderEntry(entry) {
 
   // <button type="submit" id="button1">SEARCH</button>
 
-  var button = document.createElement('button');
-  var buttonText = document.createTextNode('Open Profile');
-  button.setAttribute('class', 'modalButton');
-  button.appendChild(buttonText);
-
   var numberHeading = document.createTextNode('#' + entry.rank);
   var authorSlot = document.createTextNode('Author: ');
   var titleEntry = document.createTextNode('Title:  ');
@@ -194,11 +193,12 @@ function renderEntry(entry) {
   titleSpanElement.setAttribute('class', 'title-font-size');
 
   card.setAttribute('class', 'card-container');
+  image.setAttribute('class', 'card-image');
   headerRow.setAttribute('class', 'row header');
   firstRow.setAttribute('class', 'row display');
   secondRow.setAttribute('class', 'row display');
   thirdRow.setAttribute('class', 'row display');
-  authorSpan.setAttribute('class', 'author-font-size');
+  authorSpan.setAttribute('class', 'author-font-size text-overflow');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
@@ -212,10 +212,8 @@ function renderEntry(entry) {
   firstRow.appendChild(authorSpan);
   cardTextHolder.appendChild(firstRow);
   secondRow.appendChild(titleParagraphElement);
-  thirdRow.appendChild(button);
   cardTextHolder.appendChild(secondRow);
   card.appendChild(cardTextHolder);
-  card.appendChild(button);
   outerCard.appendChild(card);
   return outerCard;
 }
@@ -381,7 +379,26 @@ function changeHeart(event) {
     $closestAncestor.setAttribute('class', 'far fa-heart');
     removeStorage(data, book);
   }
+}
 
+function openModal(event) {
+  const card = event.target.closest('.card-container');
+  card.querySelector('.card-header');
+  const bookTitle = card.querySelector('.title-font-size').textContent;
+  document.getElementById('modal').style.display = 'block';
+
+  const arrayOfBooks = request.response.results.books;
+
+  for (let i = 0; i < arrayOfBooks.length - 5; i++) {
+    for (var key in arrayOfBooks[i]) {
+      if (arrayOfBooks[i][key] === bookTitle) {
+        var bookInformation = arrayOfBooks[i]; // this is where we left off.
+      }
+    }
+
+  }
+  var $modalImage = document.querySelector('.modal-photo');
+  $modalImage.setAttribute('src', bookInformation.book_image);
 }
 
 function addStorage(dataObject, book) {
@@ -409,6 +426,7 @@ $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
 $row.addEventListener('click', changeHeart);
 $returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
+$row.addEventListener('click', openModal);
 window.addEventListener('DOMContentLoaded', function () {
   requestData(apiKey);
 });
