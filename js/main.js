@@ -399,6 +399,12 @@ function openModal(event) {
   }
   var $modalImage = document.querySelector('.modal-photo');
   $modalImage.setAttribute('src', bookInformation.book_image);
+  const $modalWindow = document.querySelector('.modal-window');
+  const $link = $modalWindow.querySelector('a');
+
+  $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
+  $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
+  $link.setAttribute('href', bookInformation.amazon_product_url); //
 }
 
 function addStorage(dataObject, book) {
