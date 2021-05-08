@@ -218,6 +218,11 @@ b.author-prompt-modal {
 }
 
 b.ISBN-prompt-modal {
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+span.book-description {
   display: block;
   margin-left: 15px;
   margin-top: 30px;
@@ -227,8 +232,18 @@ span.ISBN-modal {
   display: inline;
 }
 
-b.Price-prompt-modal {
-  display: block;
+b.Publisher-prompt-modal {
+  display: inline-block;
   margin-left: 15px;
   margin-top: 30px;
+}
+
+strong.number-of-weeks-modal {
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+span.NOW-modal {
+  display: inline;
 }

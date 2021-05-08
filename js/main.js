@@ -15,7 +15,8 @@ var $searchResultAuthor = document.getElementById('search-result-author');
 var $searchResultCategory = document.getElementById('search-result-category');
 var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
-var $returnHomeAuthorButton = document.getElementById('button2');
+var $returnHomeButton = document.getElementById('button2');
+var $returnHomeButtonCategory = document.getElementById('button3');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
@@ -54,7 +55,7 @@ function authorRequestData(event) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
-    for (var i = 9; i >= 0; i--) {
+    for (var i = 0; i < booksArray.length; i++) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
@@ -77,7 +78,6 @@ function categoryRequestData(event) {
     var booksArray = booksResponse.results;
     for (var i = 9; i >= 0; i--) {
       var book = renderCategoryEntry(booksArray[i]);
-      window.book = book;
       $rowCategory.appendChild(book);
     }
     displayChangeCategory(categoryNameSearchInput);
@@ -135,13 +135,16 @@ function displayChangeCategory(categoryName) {
 }
 
 function attachName(name) {
-  var authorName = document.createTextNode(name);
-  $searchResultAuthor.appendChild(authorName);
+  name = document.createTextNode(name);
+  var authorName = { author: name };
+  // $searchResultAuthor
+  $searchResultAuthor.appendChild(authorName.author);
 }
 
 function attachCategory(name) {
-  var categoryName = document.createTextNode(name);
-  $searchResultCategory.appendChild(categoryName);
+  var catName = { categoryName: name };
+  var nameEntry = document.createTextNode(catName.categoryName);
+  $searchResultCategory.appendChild(nameEntry);
 }
 
 function renderEntry(entry) {
@@ -404,6 +407,9 @@ function openModal(event) {
 
   $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
   $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
+  $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
+  $modalWindow.querySelector('span.NOW-modal').textContent = ' ' + bookInformation.weeks_on_list;
+  $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
   $link.setAttribute('href', bookInformation.amazon_product_url); //
 }
 
@@ -431,7 +437,8 @@ $homeButton.addEventListener('click', displayChange);
 $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
 $row.addEventListener('click', changeHeart);
-$returnHomeAuthorButton.addEventListener('click', displayChangeAuthor);
+$returnHomeButton.addEventListener('click', displayChangeAuthor);
+$returnHomeButtonCategory.addEventListener('click', displayChangeCategory);
 $row.addEventListener('click', openModal);
 window.addEventListener('DOMContentLoaded', function () {
   requestData(apiKey);
