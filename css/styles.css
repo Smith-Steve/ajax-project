@@ -190,13 +190,60 @@ h2 {
 }
 
 img.modal-photo {
-  width: 70%;
-  height: 70%;
+  width: 230px;
+  height: 350px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img.modal-photo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 8px 30px 0 rgba(0, 0, 0, 0.59);
+  transition: 0.3s ease-in;
 }
 
 .img_window {
   position: relative;
   float: left;
   margin-left: 25px;
-  margin-top: 40px;
+  margin-top: 20px;
+}
+
+.text-content-modal {
+  margin-left: 100px;
+}
+
+b.author-prompt-modal {
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+b.ISBN-prompt-modal {
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+span.book-description {
+  display: block;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+span.ISBN-modal {
+  display: inline;
+}
+
+b.Publisher-prompt-modal {
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+strong.number-of-weeks-modal {
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 30px;
+}
+
+span.NOW-modal {
+  display: inline;
 }
