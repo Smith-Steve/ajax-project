@@ -59,9 +59,13 @@ function authorRequestData(event) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
-    displayChangeAuthor(authorName);
+    displayChangeAuthor(authorName1);
   });
   $inputForm.reset();
+  setInterval(function () {
+    $inputForm.search.value.reset();
+    authorName.reset();
+  }, 400);
   request.send(null);
 }
 
@@ -135,15 +139,16 @@ function displayChangeCategory(categoryName) {
 }
 
 function attachName(name) {
-  name = document.createTextNode(name);
-  var authorName = { author: name };
+  name = document.createTextNode(name.firstName + ' ' + name.lastName);
   // $searchResultAuthor
-  $searchResultAuthor.appendChild(authorName.author);
+  $searchResultAuthor.innerHTML = '';
+  $searchResultAuthor.appendChild(name);
 }
 
 function attachCategory(name) {
   var catName = { categoryName: name };
   var nameEntry = document.createTextNode(catName.categoryName);
+  $searchResultCategory.innerHTML = '';
   $searchResultCategory.appendChild(nameEntry);
 }
 
