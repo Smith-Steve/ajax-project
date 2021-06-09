@@ -55,6 +55,10 @@ function authorRequestData(event) {
     var booksResponse = request.response;
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
+    if (booksArray.length === 0) {
+      noResult();
+      return;
+    }
     for (var i = 0; i < booksArray.length; i++) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
@@ -62,10 +66,6 @@ function authorRequestData(event) {
     displayChangeAuthor(authorName1);
   });
   $inputForm.reset();
-  setInterval(function () {
-    $inputForm.search.value.reset();
-    authorName.reset();
-  }, 400);
   request.send(null);
 }
 
@@ -80,6 +80,9 @@ function categoryRequestData(event) {
   request.addEventListener('load', function () {
     var booksResponse = request.response;
     var booksArray = booksResponse.results;
+    if (booksArray.length === 0) {
+      noResult();
+    }
     for (var i = 9; i >= 0; i--) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
@@ -88,6 +91,13 @@ function categoryRequestData(event) {
   });
   $inputForm.reset();
   request.send();
+}
+
+function noResult() {
+  var searchByText = document.getElementById('searchBy');
+  var noResult = document.createTextNode('No Results... Try Again...');
+  searchByText.innerHTML = '';
+  searchByText.appendChild(noResult);
 }
 
 function displayChange() {
@@ -109,8 +119,8 @@ function displayChangeAuthor(authorName) {
     $homeContainer.setAttribute('class', 'container hidden');
     $searchContainer.setAttribute('class', 'container-search hidden');
     $authorContainer.setAttribute('class', 'container-author-results');
-    attachName(authorName);
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
+    attachName(authorName);
     displayAuthor = false;
   } else {
     var parentNode = document.getElementById('presentation-row-author');
@@ -132,8 +142,8 @@ function displayChangeCategory(categoryName) {
   } else {
     var parentNode = document.getElementById('presentation-row-category');
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
-    removeCards(parentNode);
     $homeContainer.setAttribute('class', 'container');
+    removeCards(parentNode);
     displayCategory = true;
   }
 }
@@ -390,6 +400,11 @@ function changeHeart(event) {
 }
 
 function openModal(event) {
+
+  const selectedElement = event.srcElement.className;
+  if (selectedElement === 'far fa-heart' || selectedElement === 'fas fa-heart') {
+    return;
+  }
   const card = event.target.closest('.card-container');
   card.querySelector('.card-header');
   const bookTitle = card.querySelector('.title-font-size').textContent;
@@ -400,7 +415,7 @@ function openModal(event) {
   for (let i = 0; i < arrayOfBooks.length - 5; i++) {
     for (var key in arrayOfBooks[i]) {
       if (arrayOfBooks[i][key] === bookTitle) {
-        var bookInformation = arrayOfBooks[i]; // this is where we left off.
+        var bookInformation = arrayOfBooks[i];
       }
     }
 
