@@ -82,8 +82,9 @@ function categoryRequestData(event) {
     var booksArray = booksResponse.results;
     if (booksArray.length === 0) {
       noResult();
+      return;
     }
-    for (var i = 9; i >= 0; i--) {
+    for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
     }
