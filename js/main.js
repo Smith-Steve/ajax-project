@@ -59,14 +59,14 @@ function authorRequestData(event) {
       noResult();
       return;
     }
-    for (var i = 0; i < booksArray.length; i++) {
+    for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
     }
     displayChangeAuthor(authorName1);
   });
   $inputForm.reset();
-  request.send(null);
+  request.send();
 }
 
 function categoryRequestData(event) {
