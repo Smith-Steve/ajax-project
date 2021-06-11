@@ -57,7 +57,7 @@ function authorRequestData(event) {
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
     if (booksArray.length === 0) {
-      noResult();
+      noResultReturnedFromSearch();
       return;
     }
 
@@ -80,7 +80,13 @@ function categoryRequestData(event) {
   event.preventDefault();
   var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
-  var categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
+  var categoryCall;
+  if (!categoryName.secondWord) {
+    categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}&api-key=${apiKey}`;
+  } else {
+    categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
+  }
+
   var request = new XMLHttpRequest();
   request.open('GET', categoryCall, true);
   request.responseType = 'json';
@@ -88,7 +94,7 @@ function categoryRequestData(event) {
     var booksResponse = request.response;
     var booksArray = booksResponse.results;
     if (booksArray.length === 0) {
-      noResult();
+      noResultReturnedFromSearch();
       return;
     }
 
@@ -106,7 +112,7 @@ function categoryRequestData(event) {
   request.send();
 }
 
-function noResult() {
+function noResultReturnedFromSearch() {
   var noResult = document.createTextNode('No Results... Try Again...');
   searchByText.innerHTML = '';
   searchByText.appendChild(noResult);
@@ -463,7 +469,10 @@ function removeStorage(dataObject, book) {
 
 function generateCategorySearch(name) {
   var categoryName = {}; name = name.split(' ');
-  categoryName.firstWord = name[0]; categoryName.secondWord = name[1];
+  categoryName.firstWord = name[0];
+  if (name[1]) {
+    categoryName.secondWord = name[1];
+  }
   return categoryName;
 }
 
