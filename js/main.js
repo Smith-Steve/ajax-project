@@ -174,7 +174,6 @@ function displayChangeCategory(categoryName) {
 
 function attachName(name) {
   name = document.createTextNode(name.firstName + ' ' + name.lastName);
-  // $searchResultAuthor
   $searchResultAuthor.innerHTML = '';
   $searchResultAuthor.appendChild(name);
 }
@@ -202,8 +201,6 @@ function renderEntry(entry) {
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
   var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
-
-  // <button type="submit" id="button1">SEARCH</button>
 
   var numberHeading = document.createTextNode('#' + entry.rank);
   var authorSlot = document.createTextNode('Author: ');
