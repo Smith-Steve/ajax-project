@@ -33,9 +33,9 @@ This application does not require any dependencies to get started.
       <b> Home Page </b>
     </td>
     <tr>
+</thead>
       <td>
         ![image](https://user-images.githubusercontent.com/51938797/121755333-c3f95000-cacb-11eb-9a97-440629aa1ef9.png)
       </td>
     </tr>
-  </thead>
 </table>
