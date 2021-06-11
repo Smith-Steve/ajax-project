@@ -1,5 +1,5 @@
 var apiKey = 'vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz';
-var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?author=Bill%Clinton&api-key=';
+var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?&api-key=';
 var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/823/sale-test.png?1586175097';
 var display = true;
 var displayAuthor = true;
@@ -20,9 +20,11 @@ var $returnHomeButtonCategory = document.getElementById('button3');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
+var searchByText = document.getElementById('searchBy');
 
 var request;
 
+// default data request.
 function requestData(apiKey) {
   if (display === true) {
     request = new XMLHttpRequest();
@@ -56,9 +58,15 @@ function authorRequestData(event) {
     var booksResponseObject = booksResponse.results;
     var booksArray = booksResponseObject;
     if (booksArray.length === 0) {
-      noResult();
+      noResultReturnedFromSearch();
       return;
     }
+
+    if (searchByText.innerHTML === 'No Results... Try Again...') {
+      backToDefault();
+    }
+
+    backToDefault(booksArray.length);
     for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
@@ -73,7 +81,13 @@ function categoryRequestData(event) {
   event.preventDefault();
   var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
-  var categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
+  var categoryCall;
+  if (!categoryName.secondWord) {
+    categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}&api-key=${apiKey}`;
+  } else {
+    categoryCall = `https://api.nytimes.com/svc/books/v3/lists.json?list=${categoryName.firstWord}-${categoryName.secondWord}&api-key=${apiKey}`;
+  }
+
   var request = new XMLHttpRequest();
   request.open('GET', categoryCall, true);
   request.responseType = 'json';
@@ -81,9 +95,14 @@ function categoryRequestData(event) {
     var booksResponse = request.response;
     var booksArray = booksResponse.results;
     if (booksArray.length === 0) {
-      noResult();
+      noResultReturnedFromSearch();
       return;
     }
+
+    if (searchByText.innerHTML === 'No Results... Try Again...') {
+      backToDefault();
+    }
+
     for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
@@ -94,13 +113,21 @@ function categoryRequestData(event) {
   request.send();
 }
 
-function noResult() {
-  var searchByText = document.getElementById('searchBy');
+// when user provides faulty search criteria, page chnages to let them know.
+function noResultReturnedFromSearch() {
   var noResult = document.createTextNode('No Results... Try Again...');
   searchByText.innerHTML = '';
   searchByText.appendChild(noResult);
 }
 
+// When user provides valid search criteria with results, page is changed back in case they search again.
+function backToDefault() {
+  var defult = document.createTextNode('Search By...');
+  searchByText.innerHTML = '';
+  searchByText.appendChild(defult);
+}
+
+// display change.
 function displayChange() {
   if (display === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -115,6 +142,7 @@ function displayChange() {
   }
 }
 
+// Display chnage from the 'author' cards page.
 function displayChangeAuthor(authorName) {
   if (displayAuthor === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -132,6 +160,7 @@ function displayChangeAuthor(authorName) {
   }
 }
 
+// Display change from the 'categories' page.
 function displayChangeCategory(categoryName) {
   if (displayCategory === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -149,9 +178,9 @@ function displayChangeCategory(categoryName) {
   }
 }
 
+// Functionality for attaching successful results to the HTML.
 function attachName(name) {
   name = document.createTextNode(name.firstName + ' ' + name.lastName);
-  // $searchResultAuthor
   $searchResultAuthor.innerHTML = '';
   $searchResultAuthor.appendChild(name);
 }
@@ -163,6 +192,7 @@ function attachCategory(name) {
   $searchResultCategory.appendChild(nameEntry);
 }
 
+// Card set up.
 function renderEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
@@ -179,8 +209,6 @@ function renderEntry(entry) {
   var image = document.createElement('img');
   var cardTextHolder = document.createElement('div');
   var bookImage = entry.book_image === undefined ? defaultImage : entry.book_image;
-
-  // <button type="submit" id="button1">SEARCH</button>
 
   var numberHeading = document.createTextNode('#' + entry.rank);
   var authorSlot = document.createTextNode('Author: ');
@@ -237,6 +265,8 @@ function renderEntry(entry) {
   return outerCard;
 }
 
+// Results that come through for author and category are different,
+// so different functions were made to accomodate that.
 function renderAuthorEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
@@ -344,6 +374,7 @@ function renderCategoryEntry(entry) {
   return outerCard;
 }
 
+// Remove cards when page is changed, so they don't accumulate.
 function removeCards(workingParentNode) {
   while (workingParentNode.querySelector('.card')) {
     workingParentNode.removeChild(workingParentNode.querySelector('.card'));
@@ -368,6 +399,7 @@ function reviewAddorNot(reviews) {
       var anchorElement = document.createElement('a');
       var link = reviewsObject[key];
       anchorElement.setAttribute('href', link);
+      anchorElement.setAttribute('target', '_blank');
       anchorElement.append(bookIcon);
       spanIconHolder.appendChild(anchorElement);
       row.appendChild(spanIconHolder);
@@ -445,7 +477,10 @@ function removeStorage(dataObject, book) {
 
 function generateCategorySearch(name) {
   var categoryName = {}; name = name.split(' ');
-  categoryName.firstWord = name[0]; categoryName.secondWord = name[1];
+  categoryName.firstWord = name[0];
+  if (name[1]) {
+    categoryName.secondWord = name[1];
+  }
   return categoryName;
 }
 

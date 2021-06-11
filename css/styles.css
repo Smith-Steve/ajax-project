@@ -13,10 +13,10 @@ header {
 
 input {
   border: 1px solid rgb(189, 189, 189);
-  font-size: 1.5rem;
+  font-size: 24px;
   height: 40px;
-  border-radius: 0.25rem;
-  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 input:focus {
@@ -33,12 +33,12 @@ button {
   background-color: #4a91fc;
   color: white;
   font-weight: bold;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: 8px 16px 8px 16px;
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
-  margin-left: 7rem;
-  margin-right: 7rem;
+  margin-left: 112px;
+  margin-right: 112px;
 }
 
 button.modalButton {
@@ -52,13 +52,13 @@ a {
 
 span#search-result-author,
 span#search-result-category {
-  font-size: 2rem;
-  margin-left: 1rem;
+  font-size: 36px;
+  margin-left: 16px;
 }
 
 .fa.fa-book {
-  margin-right: 0.5rem;
-  margin-left: 0.1rem;
+  margin-right: 8px;
+  margin-left: 2px;
 }
 
 .far.fa-heart,
@@ -68,7 +68,7 @@ span#search-result-category {
 }
 
 .searchButton {
-  padding: 0.5rem 4rem 0.5rem 4rem;
+  padding: 8px 64px 8px 64px;
   font-size: larger;
   text-align: center;
 }
@@ -79,10 +79,10 @@ span#search-result-category {
 
 .card-container {
   background-color: white;
-  border-radius: 2rem;
+  border-radius: 32px;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
-  padding: 2rem;
-  margin-bottom: 1rem;
+  padding: 32px;
+  margin-bottom: 16px;
 }
 
 .card-container:hover {
@@ -93,16 +93,16 @@ span#search-result-category {
 .modal-window {
   background-color: white;
   margin: 5% auto;
-  padding: 1rem 1rem 0 1rem;
+  padding: 16px 16px 0 16px;
   width: 50%;
   height: 50%;
-  border-radius: 0.5rem;
+  border-radius: 8px;
 }
 
 .card {
-  padding: 0.1rem;
+  padding: 2px;
   display: flex;
-  margin-top: 0.5rem;
+  margin-top: 8px;
 }
 
 .card:hover {
@@ -111,9 +111,9 @@ span#search-result-category {
 }
 
 .card-text-holder {
-  font-size: 0.9vw;
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-left: 8px;
 }
 
 b.title {
@@ -126,15 +126,15 @@ span.title {
 }
 
 p {
-  font-size: 1vw;
+  font-size: 16px;
 }
 
 span.title-font-size {
-  font-size: 0.7em;
+  font-size: 14px;
 }
 
 span.author-font-size {
-  font-size: 0.6vw;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -156,7 +156,7 @@ h1,
 }
 
 .row.header {
-  margin-left: 0.8rem;
+  margin-left: 14px;
 }
 
 h3,
@@ -186,7 +186,7 @@ h2 {
   cursor: pointer;
   position: relative;
   float: right;
-  font-size: 3rem;
+  font-size: 48px;
 }
 
 img.modal-photo {
