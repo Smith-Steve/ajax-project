@@ -24,6 +24,7 @@ var searchByText = document.getElementById('searchBy');
 
 var request;
 
+// default data request.
 function requestData(apiKey) {
   if (display === true) {
     request = new XMLHttpRequest();
@@ -112,18 +113,21 @@ function categoryRequestData(event) {
   request.send();
 }
 
+// when user provides faulty search criteria, page chnages to let them know.
 function noResultReturnedFromSearch() {
   var noResult = document.createTextNode('No Results... Try Again...');
   searchByText.innerHTML = '';
   searchByText.appendChild(noResult);
 }
 
+// When user provides valid search criteria with results, page is changed back in case they search again.
 function backToDefault() {
   var defult = document.createTextNode('Search By...');
   searchByText.innerHTML = '';
   searchByText.appendChild(defult);
 }
 
+// display change.
 function displayChange() {
   if (display === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -138,6 +142,7 @@ function displayChange() {
   }
 }
 
+// Display chnage from the 'author' cards page.
 function displayChangeAuthor(authorName) {
   if (displayAuthor === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -155,6 +160,7 @@ function displayChangeAuthor(authorName) {
   }
 }
 
+// Display change from the 'categories' page.
 function displayChangeCategory(categoryName) {
   if (displayCategory === true) {
     $homeContainer.setAttribute('class', 'container hidden');
@@ -172,6 +178,7 @@ function displayChangeCategory(categoryName) {
   }
 }
 
+// Functionality for attaching successful results to the HTML.
 function attachName(name) {
   name = document.createTextNode(name.firstName + ' ' + name.lastName);
   $searchResultAuthor.innerHTML = '';
@@ -185,6 +192,7 @@ function attachCategory(name) {
   $searchResultCategory.appendChild(nameEntry);
 }
 
+// Card set up.
 function renderEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
@@ -257,6 +265,8 @@ function renderEntry(entry) {
   return outerCard;
 }
 
+// Results that come through for author and category are different,
+// so different functions were made to accomodate that.
 function renderAuthorEntry(entry) {
   var outerCard = document.createElement('div');
   var card = document.createElement('div');
@@ -364,6 +374,7 @@ function renderCategoryEntry(entry) {
   return outerCard;
 }
 
+// Remove cards when page is changed, so they don't accumulate.
 function removeCards(workingParentNode) {
   while (workingParentNode.querySelector('.card')) {
     workingParentNode.removeChild(workingParentNode.querySelector('.card'));
