@@ -26,3 +26,21 @@ New York Times Book Application is a simple platform designed for displaying to 
 This application does not require any dependencies to get started.
 
 ##
+
+<table>
+  <thead>
+    <td>
+      <b> Home Page </b>
+    </td>
+
+    <tr>
+      <td>
+        ![image](https://user-images.githubusercontent.com/51938797/121755333-c3f95000-cacb-11eb-9a97-440629aa1ef9.png)
+      </td>
+
+    </tr>
+    <tr>
+
+    </tr>
+  </thead>
+</table>
