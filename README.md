@@ -18,3 +18,6 @@ New York Times Book Application is a simple platform designed for displaying to 
  - JavaScript
  - HTML5
  - CSS3
+
+## Local environment set up.
+This application does not require any dependencies to get started.
