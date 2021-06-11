@@ -20,6 +20,7 @@ var $returnHomeButtonCategory = document.getElementById('button3');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
+var searchByText = document.getElementById('searchBy');
 
 var request;
 
@@ -59,6 +60,12 @@ function authorRequestData(event) {
       noResult();
       return;
     }
+
+    if (searchByText.innerHTML === 'No Results... Try Again...') {
+      backToDefault();
+    }
+
+    backToDefault(booksArray.length);
     for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderAuthorEntry(booksArray[i]);
       $rowAuthor.appendChild(book);
@@ -84,6 +91,11 @@ function categoryRequestData(event) {
       noResult();
       return;
     }
+
+    if (searchByText.innerHTML === 'No Results... Try Again...') {
+      backToDefault();
+    }
+
     for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
       var book = renderCategoryEntry(booksArray[i]);
       $rowCategory.appendChild(book);
@@ -95,10 +107,15 @@ function categoryRequestData(event) {
 }
 
 function noResult() {
-  var searchByText = document.getElementById('searchBy');
   var noResult = document.createTextNode('No Results... Try Again...');
   searchByText.innerHTML = '';
   searchByText.appendChild(noResult);
+}
+
+function backToDefault() {
+  var defult = document.createTextNode('Search By...');
+  searchByText.innerHTML = '';
+  searchByText.appendChild(defult);
 }
 
 function displayChange() {
@@ -368,6 +385,7 @@ function reviewAddorNot(reviews) {
       var anchorElement = document.createElement('a');
       var link = reviewsObject[key];
       anchorElement.setAttribute('href', link);
+      anchorElement.setAttribute('target', '_blank');
       anchorElement.append(bookIcon);
       spanIconHolder.appendChild(anchorElement);
       row.appendChild(spanIconHolder);

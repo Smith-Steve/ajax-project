@@ -57,6 +57,19 @@
 
     </div>
   </div>
+  <div class="container-author-results hidden">
+    <div class="row">
+      <div class="column-full">
+                  <div class="align-right"><button type="submit" id="button5">HOME</button></div>
+                  <h1>Showing Results For: </h1>
+                  <span id="search-result-author2"></span>
+
+    </div>
+    </div>
+    <div class="row" id="presentation-row-author2">
+
+    </div>
+  </div>
   <div class="container-category-results hidden">
     <div class="row">
       <div class="column-full">
@@ -102,6 +115,43 @@
             </div>
           </div>
         </span>
+        <span class="text-content-modal">
+          <div class="row">
+            <div class="column-full">
+              <b class="author-prompt-modal">Author: </b><span class="author-modal"></span>
+              <b class="ISBN-prompt-modal">ISBN: </b><span class="ISBN-modal"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <b class="Publisher-prompt-modal">Publisher: </b> <span class="Publisher-modal"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <strong class="number-of-weeks-modal">Number of Weeks on NYT's List:  </strong><span class="NOW-modal"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-full">
+              <span class="book-description">
+
+              </span>
+            </div>
+          </div>
+        </span>
+    </div>
+  </div>
+  <div id="modal-mobile" class="modal-mobile-warning">
+    <div class="modal-window">
+      <header class="header">
+        <span onclick="document.getElementById('modal-mobile').style.display='none'"
+          class="display-topright">&times;</span>
+        <h2>Mobile Warning</h2>
+      </header>
+      <div class="container">
+        <p>Please note that we are in the process of finishing the mobile development process.</p>
+      </div>
     </div>
   </div>
   <script src="js/data.js"></script>
