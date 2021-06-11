@@ -1,5 +1,5 @@
 var apiKey = 'vIrkw0zTaB0xGuFESxisI1NuaqV5vJqz';
-var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?author=Bill%Clinton&api-key=';
+var defaultCall = 'https://api.nytimes.com/svc/books/v3/lists/hardcover-fiction.json?&api-key=';
 var defaultImage = 'https://demo.publishr.cloud/uploads/demo/books/493/edition/823/sale-test.png?1586175097';
 var display = true;
 var displayAuthor = true;
