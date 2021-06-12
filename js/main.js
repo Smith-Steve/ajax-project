@@ -48,11 +48,13 @@ function requestData(apiKey) {
 
 function authorRequestData(event) {
   event.preventDefault();
+  var element = '.searchButtonAuthor';
   var authorName = $inputForm.search.value;
   var authorName1 = generateFirstLastName(authorName);
   var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName1.firstName}%${authorName1.lastName}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
   request.open('GET', authorCall, true);
+  document.querySelector(element).removeAttribute('id');
   request.responseType = 'json';
   request.addEventListener('load', function () {
     var booksResponse = request.response;
@@ -60,6 +62,7 @@ function authorRequestData(event) {
     var booksArray = booksResponseObject;
     if (booksArray.length === 0) {
       noResultReturnedFromSearch();
+      addAttributes(element, 'authorSearchButton');
       return;
     }
 
@@ -75,11 +78,17 @@ function authorRequestData(event) {
     displayChangeAuthor(authorName1);
     $inputForm.reset();
   });
+  addAttributes(element, 'authorSearchButton');
   request.send();
+}
+
+function addAttributes(elementToAddAttributeBackTo, removedAttribute) {
+  document.querySelector(elementToAddAttributeBackTo).id = removedAttribute;
 }
 
 function categoryRequestData(event) {
   event.preventDefault();
+  var element = '.searchButtonCategory';
   var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
   var categoryCall;
@@ -91,12 +100,14 @@ function categoryRequestData(event) {
 
   var request = new XMLHttpRequest();
   request.open('GET', categoryCall, true);
+  document.querySelector(element).removeAttribute('id');
   request.responseType = 'json';
   request.addEventListener('load', function () {
     var booksResponse = request.response;
     var booksArray = booksResponse.results;
     if (booksArray.length === 0) {
       noResultReturnedFromSearch();
+      addAttributes(element, 'categorySearchButton');
       return;
     }
 
@@ -112,6 +123,7 @@ function categoryRequestData(event) {
     $inputForm.reset();
   });
   request.send();
+  addAttributes(element, 'categorySearchButton');
 }
 
 // when user provides faulty search criteria, page chnages to let them know.
@@ -458,12 +470,42 @@ function openModal(event) {
   $modalImage.setAttribute('src', bookInformation.book_image);
   const $modalWindow = document.querySelector('.modal-window');
   const $link = $modalWindow.querySelector('a');
-  $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
-  $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
-  $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
-  $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
-  $modalWindow.querySelector('span.NOW-modal').textContent = ' ' + bookInformation.weeks_on_list;
-  $link.setAttribute('href', bookInformation.amazon_product_url); //
+  if (bookInformation.author) {
+    $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
+  } else {
+    $modalWindow.querySelector('span.author-modal').textContent = 'Not Available';
+  }
+
+  if (bookInformation.primary_isbn13) {
+    $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.author;
+  } else {
+    $modalWindow.querySelector('span.ISBN-modal').textContent = 'Not Available';
+  }
+
+  if (bookInformation.publisher) {
+    $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
+  } else {
+    $modalWindow.querySelector('span.Publisher-modal').textContent = 'Not Available';
+  }
+
+  if (bookInformation.description) {
+    $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
+  } else {
+    $modalWindow.querySelector('span.book-description').textContent = 'Not Available';
+  }
+
+  if (bookInformation.weeks_on_list) {
+    $modalWindow.querySelector('span.NOW-modal').textContent = ' ' + bookInformation.weeks_on_list;
+  } else {
+    $modalWindow.querySelector('span.NOW-modal').textContent = 'Not Available';
+  }
+
+  if (bookInformation.amazon_product_url) {
+    $link.setAttribute('href', bookInformation.amazon_product_url);
+  } else {
+    $link.setAttribute('href', 'https://www.amazon.com/gp/product/0');
+  }
+
 }
 
 function addStorage(dataObject, book) {
