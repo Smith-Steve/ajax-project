@@ -37,8 +37,8 @@ button {
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
-  margin-left: 112px;
-  margin-right: 112px;
+  margin-left: 60px;
+  margin-right: 60px;
 }
 
 button.modalButton {
@@ -75,6 +75,16 @@ span#search-result-category {
 
 .align-right {
   text-align: right;
+}
+
+.container-search {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.align-right > button {
+  margin-right: 12pc;
+  margin-bottom: 20px;
 }
 
 .card-container {

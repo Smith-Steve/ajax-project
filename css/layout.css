@@ -6,11 +6,6 @@
   margin: 0 auto;
 }
 
-.container-search {
-  text-align: center;
-  margin-top: 5rem;
-}
-
 .row,
 #presentation-row,
 #presentation-row-author {
@@ -66,6 +61,10 @@
 @media screen and (max-width: 500px) {
   #modal {
     display: none !important;
+  }
+
+  #button6 {
+    margin-right: 12px;
   }
 
   #modal-mobile {

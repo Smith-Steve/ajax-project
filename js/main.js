@@ -17,6 +17,7 @@ var $tags = document.querySelector('a');
 var $homeButton = document.getElementById('button1');
 var $returnHomeButton = document.getElementById('button2');
 var $returnHomeButtonCategory = document.getElementById('button3');
+var $returnHomeSearch = document.getElementById('button6');
 var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
@@ -72,8 +73,8 @@ function authorRequestData(event) {
       $rowAuthor.appendChild(book);
     }
     displayChangeAuthor(authorName1);
+    $inputForm.reset();
   });
-  $inputForm.reset();
   request.send();
 }
 
@@ -108,8 +109,8 @@ function categoryRequestData(event) {
       $rowCategory.appendChild(book);
     }
     displayChangeCategory(categoryNameSearchInput);
+    $inputForm.reset();
   });
-  $inputForm.reset();
   request.send();
 }
 
@@ -457,12 +458,11 @@ function openModal(event) {
   $modalImage.setAttribute('src', bookInformation.book_image);
   const $modalWindow = document.querySelector('.modal-window');
   const $link = $modalWindow.querySelector('a');
-
   $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
   $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
   $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
-  $modalWindow.querySelector('span.NOW-modal').textContent = ' ' + bookInformation.weeks_on_list;
   $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
+  $modalWindow.querySelector('span.NOW-modal').textContent = ' ' + bookInformation.weeks_on_list;
   $link.setAttribute('href', bookInformation.amazon_product_url); //
 }
 
@@ -494,6 +494,7 @@ $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
 $row.addEventListener('click', changeHeart);
 $returnHomeButton.addEventListener('click', displayChangeAuthor);
+$returnHomeSearch.addEventListener('click', displayChange);
 $returnHomeButtonCategory.addEventListener('click', displayChangeCategory);
 $row.addEventListener('click', openModal);
 window.addEventListener('DOMContentLoaded', function () {
