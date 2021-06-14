@@ -48,13 +48,14 @@ function requestData(apiKey) {
 
 function authorRequestData(event) {
   event.preventDefault();
+  searchByText.innerHTML = 'Searching...';
   var element = '.searchButtonAuthor';
+  document.querySelector(element).disabled = true;
   var authorName = $inputForm.search.value;
   var authorName1 = generateFirstLastName(authorName);
   var authorCall = `https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?author=${authorName1.firstName}%${authorName1.lastName}&api-key=${apiKey}`;
   var request = new XMLHttpRequest();
   request.open('GET', authorCall, true);
-  document.querySelector(element).removeAttribute('id');
   request.responseType = 'json';
   request.addEventListener('load', function () {
     var booksResponse = request.response;
@@ -62,12 +63,13 @@ function authorRequestData(event) {
     var booksArray = booksResponseObject;
     if (booksArray.length === 0) {
       noResultReturnedFromSearch();
-      addAttributes(element, 'authorSearchButton');
+      document.querySelector(element).disabled = false;
       return;
     }
 
     if (searchByText.innerHTML === 'No Results... Try Again...') {
       backToDefault();
+      document.querySelector(element).disabled = false;
     }
 
     backToDefault(booksArray.length);
@@ -78,17 +80,14 @@ function authorRequestData(event) {
     displayChangeAuthor(authorName1);
     $inputForm.reset();
   });
-  addAttributes(element, 'authorSearchButton');
   request.send();
-}
-
-function addAttributes(elementToAddAttributeBackTo, removedAttribute) {
-  document.querySelector(elementToAddAttributeBackTo).id = removedAttribute;
 }
 
 function categoryRequestData(event) {
   event.preventDefault();
+  searchByText.innerHTML = 'Searching...';
   var element = '.searchButtonCategory';
+  document.querySelector(element).disabled = true;
   var categoryNameSearchInput = $inputForm.search.value;
   var categoryName = generateCategorySearch($inputForm.search.value);
   var categoryCall;
@@ -107,12 +106,13 @@ function categoryRequestData(event) {
     var booksArray = booksResponse.results;
     if (booksArray.length === 0) {
       noResultReturnedFromSearch();
-      addAttributes(element, 'categorySearchButton');
+      document.querySelector(element).disabled = false;
       return;
     }
 
     if (searchByText.innerHTML === 'No Results... Try Again...') {
       backToDefault();
+      document.querySelector(element).disabled = false;
     }
 
     for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
@@ -123,7 +123,6 @@ function categoryRequestData(event) {
     $inputForm.reset();
   });
   request.send();
-  addAttributes(element, 'categorySearchButton');
 }
 
 // when user provides faulty search criteria, page chnages to let them know.
@@ -163,6 +162,7 @@ function displayChangeAuthor(authorName) {
     $authorContainer.setAttribute('class', 'container-author-results');
     $categoryContainer.setAttribute('class', 'container-category-results hidden');
     attachName(authorName);
+    document.querySelector('.searchButtonAuthor').disabled = false;
     displayAuthor = false;
   } else {
     var parentNode = document.getElementById('presentation-row-author');
@@ -181,6 +181,7 @@ function displayChangeCategory(categoryName) {
     $authorContainer.setAttribute('class', 'container-author-results hidden');
     $categoryContainer.setAttribute('class', 'container-category-results');
     attachCategory(categoryName);
+    document.querySelector('.searchButtonCategory').disabled = false;
     displayCategory = false;
   } else {
     var parentNode = document.getElementById('presentation-row-category');
