@@ -9,6 +9,7 @@ body {
 
 header {
   background-color: #4a91fc;
+  width: 100%;
 }
 
 input {
@@ -17,6 +18,7 @@ input {
   height: 40px;
   border-radius: 5px;
   margin-bottom: 5px;
+  width: 72%;
 }
 
 input:focus {
@@ -87,12 +89,17 @@ span#search-result-category {
   margin-bottom: 20px;
 }
 
-.card-container {
+.card-container,
+.card-container-cat {
   background-color: white;
   border-radius: 32px;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 32px;
   margin-bottom: 16px;
+}
+
+.card-container-cat {
+  flex: 1;
 }
 
 .card-container:hover {
@@ -112,6 +119,7 @@ span#search-result-category {
 .card {
   padding: 2px;
   display: flex;
+  flex-direction: column;
   margin-top: 8px;
 }
 

@@ -364,10 +364,10 @@ function renderCategoryEntry(entry) {
 
   titleSpan.appendChild(titleEntry);
 
-  outerCard.setAttribute('class', 'card');
+  outerCard.setAttribute('class', 'card cat-card');
   titleSpanElement.setAttribute('class', 'title-font-size');
 
-  card.setAttribute('class', 'card-container');
+  card.setAttribute('class', 'card-container-cat');
   firstRow.setAttribute('class', 'row display');
   secondRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size');

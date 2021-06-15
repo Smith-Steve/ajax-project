@@ -1,3 +1,8 @@
+* {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .container,
 .container-author-results,
 .container-category-results,
@@ -61,10 +66,6 @@
 @media screen and (max-width: 500px) {
   #modal {
     display: none !important;
-  }
-
-  #button6 {
-    margin-right: 12px;
   }
 
   #modal-mobile {
