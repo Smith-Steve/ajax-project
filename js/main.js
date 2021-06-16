@@ -478,7 +478,7 @@ function openModal(event) {
   }
 
   if (bookInformation.primary_isbn13) {
-    $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.author;
+    $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
   } else {
     $modalWindow.querySelector('span.ISBN-modal').textContent = 'Not Available';
   }
