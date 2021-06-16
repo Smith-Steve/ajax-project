@@ -89,17 +89,12 @@ span#search-result-category {
   margin-bottom: 20px;
 }
 
-.card-container,
-.card-container-cat {
+.card-container {
   background-color: white;
   border-radius: 32px;
   box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.3);
   padding: 32px;
   margin-bottom: 16px;
-}
-
-.card-container-cat {
-  flex: 1;
 }
 
 .card-container:hover {
