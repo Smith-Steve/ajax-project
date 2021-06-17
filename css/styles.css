@@ -172,6 +172,11 @@ img {
   cursor: pointer;
 }
 
+img.modal-photo-mobile {
+  width: 210px;
+  height: 320px;
+}
+
 h1,
 .row.display,
 .row.header {
