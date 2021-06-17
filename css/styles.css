@@ -119,8 +119,9 @@ span#search-result-category {
 
 .modal-mobile-window {
   width: 75%;
-  height: 75%;
-  padding: 8px 8px 0 8px;
+  padding: 8px 8px 8px 8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -172,9 +173,13 @@ img {
   cursor: pointer;
 }
 
+.modal-mobile-image-container {
+  position: relative;
+}
+
 img.modal-photo-mobile {
-  width: 210px;
-  height: 25%;
+  position: static;
+  height: 100%;
 }
 
 h1,
@@ -232,7 +237,7 @@ img.modal-photo:hover {
 }
 
 .img-window {
-  position: relative;
+  position: static;
   float: left;
   margin-left: 25px;
   margin-top: 20px;
