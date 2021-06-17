@@ -61,7 +61,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 687px) {
   .container-category-results > .row > .card,
   .container-author-results > .row > .card {
     width: 100%;

@@ -52,6 +52,9 @@ a,
 #mobile-modal-title {
   color: black;
   text-decoration: none;
+  text-align: center;
+  font-size: calc(90%);
+  white-space: nowrap;
 }
 
 span#search-result-author,
@@ -109,6 +112,10 @@ span#search-result-category {
   background-color: white;
   margin: 5% auto;
   border-radius: 8px;
+}
+
+.modal-mobile-content-container {
+  margin-left: unset;
 }
 
 .modal-window {
@@ -222,6 +229,10 @@ h2 {
   position: relative;
   float: right;
   font-size: 48px;
+}
+
+span.close {
+  font-size: 12px;
 }
 
 img.modal-photo {
