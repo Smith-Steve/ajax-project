@@ -231,7 +231,7 @@ img.modal-photo:hover {
   transition: 0.3s ease-in;
 }
 
-.img_window {
+.img-window {
   position: relative;
   float: left;
   margin-left: 25px;
