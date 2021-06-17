@@ -62,10 +62,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  #modal {
-    display: none !important;
-  }
-
   .container-category-results > .row > .card,
   .container-author-results > .row > .card {
     width: 100%;
