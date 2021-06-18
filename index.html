@@ -84,77 +84,77 @@
     </div>
   </div>
   <div id="modal" class="modal">
-    <div class="modal-window">
-        <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-          <div class="img-window">
-            <a href="add_link" target="_blank">
-              <img class="modal-photo" src="images/favicon.ico">
-            </a>
-          </div>
-        <div class="text-content-modal">
-          <div class="row">
-            <div class="column-full">
-              <b class="author-prompt-modal">Author: </b><span class="author-modal"></span>
-              <b class="ISBN-prompt-modal">ISBN: </b><span class="ISBN-modal"></span>
+      <div class="modal-window">
+          <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+            <div class="img-window">
+              <a href="add_link" target="_blank">
+                <img class="modal-photo" src="images/favicon.ico">
+              </a>
+            </div>
+          <div class="text-content-modal">
+            <div class="row">
+              <div class="column-full">
+                <b class="author-prompt-modal">Author: </b><span class="author-modal"></span>
+                <b class="ISBN-prompt-modal">ISBN: </b><span class="ISBN-modal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column-full">
+                <b class="Publisher-prompt-modal">Publisher: </b> <span class="Publisher-modal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column-full">
+                <strong class="number-of-weeks-modal">Number of Weeks on NYT's List:  </strong><span class="NOW-modal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column-full">
+                <span class="book-description">
+
+                </span>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div id="mobile-modal" class="modal">
+        <div class="modal-mobile-window">
+          <span class="close display-topright"
+            onclick="document.getElementById('mobile-modal').style.display='none'">&times;</span>
           <div class="row">
-            <div class="column-full">
-              <b class="Publisher-prompt-modal">Publisher: </b> <span class="Publisher-modal"></span>
-            </div>
+          <div class="modal-mobile-content-container">
+          <div class="container">
+            <a id="mobile-modal-link" href="add_link" target="_blank"><h2 id="mobile-modal-title"></h2></a>
           </div>
-          <div class="row">
-            <div class="column-full">
-              <strong class="number-of-weeks-modal">Number of Weeks on NYT's List:  </strong><span class="NOW-modal"></span>
-            </div>
+          <div/>
+          <span class="text-content-modal">
+            <div class="row">
+              <b class="modal-text-bold">Author: </b><span class="author-modal mobile"></span>
           </div>
-          <div class="row">
-            <div class="column-full">
-              <span class="book-description">
+            <div class="row">
+              <b class="modal-text-bold">ISBN: </b><span class="ISBN-modal mobile"></span>
+          </div>
+            <div class="row">
+              <b class="modal-text-bold">Publisher: </b> <span class="Publisher-modal mobile"></span>
+            </div>
+            <div class="row">
+              <span class="book-description" id="modal-book-description">
 
               </span>
             </div>
+          </span>
           </div>
+          </div>
+      </div>
+      <div class="modal-mobile-image-container">
+        <div class="img-window">
+          <a href="add_link" target="_blank">
+            <img class="modal-photo-mobile" src="images/favicon.ico">
+          </a>
         </div>
       </div>
-    </div>
-    <div id="mobile-modal" class="modal">
-      <div class="modal-mobile-window">
-                                                          <span class="close display-topright"
-                                                            onclick="document.getElementById('mobile-modal').style.display='none'">&times;</span>
-        <div class="row">
-        <div class="modal-mobile-content-container">
-        <div class="container">
-          <a id="mobile-modal-link" href="add_link" target="_blank"><h2 id="mobile-modal-title"></h2></a>
-        </div>
-        <div/>
-        <span class="text-content-modal">
-          <div class="row">
-            <b class="modal-text-bold">Author: </b><span class="author-modal mobile"></span>
-        </div>
-          <div class="row">
-            <b class="modal-text-bold">ISBN: </b><span class="ISBN-modal mobile"></span>
-        </div>
-          <div class="row">
-            <b class="modal-text-bold">Publisher: </b> <span class="Publisher-modal mobile"></span>
-          </div>
-          <div class="row">
-            <span class="book-description" id="modal-book-description">
-
-            </span>
-          </div>
-        </span>
-        </div>
-        </div>
-    </div>
-    <div class="modal-mobile-image-container">
-      <div class="img-window">
-        <a href="add_link" target="_blank">
-          <img class="modal-photo-mobile" src="images/favicon.ico">
-        </a>
-      </div>
-    </div>
-    </div>
+  </div>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>

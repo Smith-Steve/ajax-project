@@ -108,7 +108,8 @@ span#search-result-category {
 }
 
 .modal-window,
-.modal-mobile-window {
+.modal-mobile-window,
+.modal- {
   background-color: white;
   border-radius: 8px;
 }
@@ -212,7 +213,8 @@ h2 {
 }
 
 #modal,
-#mobile-modal {
+#mobile-modal,
+#categories-modal {
   display: none;
   position: fixed;
   z-index: 1;
