@@ -108,7 +108,8 @@ span#search-result-category {
 }
 
 .modal-window,
-.modal-mobile-window {
+.modal-mobile-window,
+.modal- {
   background-color: white;
   border-radius: 8px;
 }
@@ -161,13 +162,12 @@ p {
 }
 
 span.title-font-size {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 span.author-font-size {
   font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
+  width: 50px;
 }
 
 img {
@@ -212,7 +212,8 @@ h2 {
 }
 
 #modal,
-#mobile-modal {
+#mobile-modal,
+#categories-modal {
   display: none;
   position: fixed;
   z-index: 1;

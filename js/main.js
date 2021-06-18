@@ -23,6 +23,7 @@ var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
 var searchByText = document.getElementById('searchBy');
 var mobileModalHeader = document.getElementById('mobile-modal-title');
+var categoriesList = ['\'Hardcover Fiction\'', '\'Hardcover Nonficiton\'', '\'Paperback nonfiction\'', '\'Young Adult\'', '\'E-book fiction\'', '\'E-book nonfiction\''];
 
 var request;
 
@@ -58,29 +59,37 @@ function authorRequestData(event) {
   var request = new XMLHttpRequest();
   request.open('GET', authorCall, true);
   request.responseType = 'json';
-  request.addEventListener('load', function () {
-    var booksResponse = request.response;
-    var booksResponseObject = booksResponse.results;
-    var booksArray = booksResponseObject;
-    if (booksArray.length === 0) {
-      noResultReturnedFromSearch();
-      document.querySelector(element).disabled = false;
-      return;
-    }
+  request.onreadystatechange = function () {
+    if (request.status >= 200 && request.status < 400) {
+      request.addEventListener('load', function () {
+        var booksResponse = request.response;
+        var booksResponseObject = booksResponse.results;
+        var booksArray = booksResponseObject;
+        if (booksArray.length === 0) {
+          noResultReturnedFromSearch();
+          document.querySelector(element).disabled = false;
+          return;
+        }
 
-    if (searchByText.innerHTML === 'No Results... Try Again...') {
-      backToDefault();
-      document.querySelector(element).disabled = false;
-    }
+        if (searchByText.innerHTML === 'No Results... Try Again...' || searchByText.innerHTML === 'Lost connection. Please check internet and try again.') {
+          backToDefault();
+          document.querySelector(element).disabled = false;
+        }
 
-    backToDefault(booksArray.length);
-    for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
-      var book = renderAuthorEntry(booksArray[i]);
-      $rowAuthor.appendChild(book);
+        backToDefault(booksArray.length);
+        for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
+          var book = renderAuthorEntry(booksArray[i]);
+          $rowAuthor.appendChild(book);
+        }
+        displayChangeAuthor(authorName1);
+        $inputForm.reset();
+      });
+    } else {
+      request.abort();
+      document.querySelector(element).disabled = false;
+      connectionIssue();
     }
-    displayChangeAuthor(authorName1);
-    $inputForm.reset();
-  });
+  };
   request.send();
 }
 
@@ -100,35 +109,54 @@ function categoryRequestData(event) {
 
   var request = new XMLHttpRequest();
   request.open('GET', categoryCall, true);
-  document.querySelector(element).removeAttribute('id');
   request.responseType = 'json';
-  request.addEventListener('load', function () {
-    var booksResponse = request.response;
-    var booksArray = booksResponse.results;
-    if (booksArray.length === 0) {
-      noResultReturnedFromSearch();
-      document.querySelector(element).disabled = false;
-      return;
-    }
+  request.onreadystatechange = function () {
+    if (request.status >= 200 && request.status < 400) {
+      request.addEventListener('load', function () {
+        var booksResponse = request.response;
+        var booksArray = booksResponse.results;
+        if (booksArray.length === 0) {
+          noResultReturnedFromSearchCategories();
+          document.querySelector(element).disabled = false;
+          return;
+        }
 
-    if (searchByText.innerHTML === 'No Results... Try Again...') {
-      backToDefault();
-      document.querySelector(element).disabled = false;
-    }
+        if (searchByText.innerHTML === 'No Results... Try Again...' || searchByText.innerHTML === 'Lost connection. Please check internet and try again.') {
+          backToDefault();
+          document.querySelector(element).disabled = false;
+        }
 
-    for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
-      var book = renderCategoryEntry(booksArray[i]);
-      $rowCategory.appendChild(book);
+        for (var i = 0; (i < 10) && (i < booksArray.length); i++) {
+          var book = renderCategoryEntry(booksArray[i]);
+          $rowCategory.appendChild(book);
+        }
+        displayChangeCategory(categoryNameSearchInput);
+        $inputForm.reset();
+      });
+    } else {
+      request.abort();
+      document.querySelector(element).disabled = false;
+      connectionIssue();
     }
-    displayChangeCategory(categoryNameSearchInput);
-    $inputForm.reset();
-  });
+  };
   request.send();
 }
 
 // when user provides faulty search criteria, page chnages to let them know.
+function connectionIssue() {
+  var noResult = document.createTextNode('Lost connection. Please check internet and try again.');
+  searchByText.innerHTML = '';
+  searchByText.appendChild(noResult);
+}
+
 function noResultReturnedFromSearch() {
   var noResult = document.createTextNode('No Results... Try Again...');
+  searchByText.innerHTML = '';
+  searchByText.appendChild(noResult);
+}
+
+function noResultReturnedFromSearchCategories() {
+  var noResult = document.createTextNode(`No results... try... ${categoriesList[Math.floor(Math.random() * 6)]} instead`);
   searchByText.innerHTML = '';
   searchByText.appendChild(noResult);
 }
@@ -253,6 +281,7 @@ function renderEntry(entry) {
 
   outerCard.setAttribute('class', 'card');
   titleSpanElement.setAttribute('class', 'title-font-size');
+  titleSpanElement.setAttribute('id', 'title-text');
 
   card.setAttribute('class', 'card-container');
   image.setAttribute('class', 'card-image');
@@ -261,6 +290,7 @@ function renderEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   thirdRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size text-overflow');
+  authorSpan.setAttribute('id', 'author-text');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
@@ -568,7 +598,12 @@ $authorSearchButton.addEventListener('click', authorRequestData);
 $categorySearchButton.addEventListener('click', categoryRequestData);
 $row.addEventListener('click', changeHeart);
 $returnHomeButton.addEventListener('click', displayChangeAuthor);
-$returnHomeSearch.addEventListener('click', displayChange);
+$returnHomeSearch.addEventListener('click', function () {
+  if (searchByText.innerHTML !== 'Search by...') {
+    backToDefault();
+  }
+  displayChange();
+});
 $returnHomeButtonCategory.addEventListener('click', displayChangeCategory);
 $row.addEventListener('click', function () {
   if (window.innerWidth < 813) {
