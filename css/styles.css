@@ -117,10 +117,6 @@ span#search-result-category {
   display: none;
 }
 
-.modal-mobile-content-container {
-  margin-left: -40px;
-}
-
 .modal-window {
   width: 50%;
   height: 50%;
@@ -188,8 +184,10 @@ img {
 }
 
 img.modal-photo-mobile {
+  margin-left: 7px;
+  margin-right: 7px;
   position: static;
-  height: 100%;
+  height: 90%;
 }
 
 h1,
@@ -254,7 +252,7 @@ img.modal-photo:hover {
 .img-window {
   position: static;
   float: left;
-  margin-left: 25px;
+  margin-left: 5px;
   margin-top: 20px;
 }
 

@@ -56,6 +56,10 @@
     padding: 0 0.75rem;
   }
 
+  .text-content-modal {
+    margin-top: 20px;
+  }
+
   .column-half,
   .modal-mobile-content-container,
   .modal-mobile-window > .row {
@@ -73,6 +77,16 @@
   .modal-mobile-content-container {
     width: 100%;
   }
+
+  span.Publisher-modal.mobile,
+  span.ISBN-modal.mobile,
+  span.author-modal.mobile {
+    margin: 0 inherit 0 inherit;
+  }
+
+  #mobile-modal > div > span {
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 687px) {
@@ -84,8 +98,23 @@
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 415px) {
   img.modal-photo-mobile {
-    width: 90%;
+    width: 80%;
+  }
+
+  *.modal-mobile-image-container,
+  *span.close.display-topright,
+  #mobile-modal > div > span {
+    margin: unset;
+    padding: unset;
+  }
+
+  .modal-mobile-window > .row:first-of-type {
+    margin: 0;
+  }
+
+  #mobile-modal > div > span {
+    margin: 0 40px 0 0;
   }
 }

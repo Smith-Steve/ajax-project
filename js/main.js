@@ -533,9 +533,9 @@ function modalMobileSetUp(event) {
   mobileModalHeader.textContent = bookInformation.title;
   document.getElementById('mobile-modal-link').setAttribute('href', bookInformation.amazon_product_url);
 
-  $modalWindow.querySelector('span.author-modal').textContent = bookInformation.author;
-  $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
-  $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
+  $modalWindow.querySelector('span.author-modal.mobile').textContent = bookInformation.author;
+  $modalWindow.querySelector('span.ISBN-modal.mobile').textContent = bookInformation.primary_isbn13;
+  $modalWindow.querySelector('span.Publisher-modal.mobile').textContent = bookInformation.publisher;
   $modalImage.setAttribute('src', bookInformation.book_image);
   $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
 }
