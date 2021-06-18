@@ -22,6 +22,7 @@ var $authorSearchButton = document.getElementById('authorSearchButton');
 var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
 var searchByText = document.getElementById('searchBy');
+var mobileModalHeader = document.getElementById('mobile-modal-title');
 
 var request;
 
@@ -506,7 +507,37 @@ function openModal(event) {
   } else {
     $link.setAttribute('href', 'https://www.amazon.com/gp/product/0');
   }
+}
 
+function modalMobileSetUp(event) {
+  const selectedElement = event.srcElement.className;
+  if (selectedElement === 'far fa-heart' || selectedElement === 'fas fa-heart') {
+    return;
+  }
+
+  const card = event.target.closest('.card-container');
+  const arrayOfBooks = request.response.results.books;
+  const bookTitle = card.querySelector('.title-font-size').textContent;
+  document.getElementById('mobile-modal').style.display = 'block';
+  var $modalImage = document.querySelector('.modal-photo-mobile');
+
+  for (let i = 0; i < arrayOfBooks.length - 5; i++) {
+    for (var key in arrayOfBooks[i]) {
+      if (arrayOfBooks[i][key] === bookTitle) {
+        var bookInformation = arrayOfBooks[i];
+      }
+    }
+  }
+
+  const $modalWindow = document.querySelector('.modal-mobile-window');
+  mobileModalHeader.textContent = bookInformation.title;
+  document.getElementById('mobile-modal-link').setAttribute('href', bookInformation.amazon_product_url);
+
+  $modalWindow.querySelector('span.author-modal.mobile').textContent = bookInformation.author;
+  $modalWindow.querySelector('span.ISBN-modal.mobile').textContent = bookInformation.primary_isbn13;
+  $modalWindow.querySelector('span.Publisher-modal.mobile').textContent = bookInformation.publisher;
+  $modalImage.setAttribute('src', bookInformation.book_image);
+  $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
 }
 
 function addStorage(dataObject, book) {
@@ -539,7 +570,13 @@ $row.addEventListener('click', changeHeart);
 $returnHomeButton.addEventListener('click', displayChangeAuthor);
 $returnHomeSearch.addEventListener('click', displayChange);
 $returnHomeButtonCategory.addEventListener('click', displayChangeCategory);
-$row.addEventListener('click', openModal);
+$row.addEventListener('click', function () {
+  if (window.innerWidth < 813) {
+    modalMobileSetUp(event);
+  } else {
+    openModal(event);
+  }
+});
 window.addEventListener('DOMContentLoaded', function () {
   requestData(apiKey);
 });

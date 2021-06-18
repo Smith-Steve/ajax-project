@@ -48,8 +48,13 @@ button.modalButton {
   margin-right: 0;
 }
 
-a {
+a,
+#mobile-modal-title {
   color: black;
+  text-decoration: none;
+  text-align: center;
+  font-size: calc(90%);
+  white-space: nowrap;
 }
 
 span#search-result-author,
@@ -102,13 +107,27 @@ span#search-result-category {
   transition: 0.3s ease-in;
 }
 
-.modal-window {
+.modal-window,
+.modal-mobile-window {
   background-color: white;
-  margin: 5% auto;
-  padding: 16px 16px 0 16px;
+  border-radius: 8px;
+}
+
+.text-content-modal > .row > .book-description {
+  display: none;
+}
+
+.modal-window {
   width: 50%;
   height: 50%;
-  border-radius: 8px;
+  padding: 16px 16px 0 16px;
+}
+
+.modal-mobile-window {
+  width: 75%;
+  padding: 4px 0 8px 8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -155,9 +174,20 @@ img {
   margin-left: auto;
   margin-right: auto;
   width: 175px;
-  height: 250px;
+  height: 240px;
   display: block;
   cursor: pointer;
+}
+
+.modal-mobile-image-container {
+  position: relative;
+}
+
+img.modal-photo-mobile {
+  margin-left: 7px;
+  margin-right: 7px;
+  position: static;
+  height: 90%;
 }
 
 h1,
@@ -181,7 +211,8 @@ h2 {
   color: white;
 }
 
-.modal {
+#modal,
+#mobile-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -201,6 +232,11 @@ h2 {
   font-size: 48px;
 }
 
+span.close.display-topright {
+  font-size: 12px;
+  margin-left: -2px;
+}
+
 img.modal-photo {
   width: 215px;
   height: 280px;
@@ -213,10 +249,10 @@ img.modal-photo:hover {
   transition: 0.3s ease-in;
 }
 
-.img_window {
-  position: relative;
+.img-window {
+  position: static;
   float: left;
-  margin-left: 25px;
+  margin-left: 5px;
   margin-top: 20px;
 }
 
