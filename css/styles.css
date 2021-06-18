@@ -167,8 +167,7 @@ span.title-font-size {
 
 span.author-font-size {
   font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
+  width: 50px;
 }
 
 img {

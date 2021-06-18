@@ -23,7 +23,7 @@ var $categorySearchButton = document.getElementById('categorySearchButton');
 var $inputForm = document.getElementById('input-form');
 var searchByText = document.getElementById('searchBy');
 var mobileModalHeader = document.getElementById('mobile-modal-title');
-var categoriesList = ['\'Hardcover Fiction\'', '\'Hardcover Nonficiton\'', '\'Paperback fiction\'', '\'Paperback nonfiction\'', '\'Young Adult\'', '\'E-book fiction\'', '\'E-book nonfiction\''];
+var categoriesList = ['\'Hardcover Fiction\'', '\'Hardcover Nonficiton\'', '\'Paperback nonfiction\'', '\'Young Adult\'', '\'E-book fiction\'', '\'E-book nonfiction\''];
 
 var request;
 
@@ -281,6 +281,7 @@ function renderEntry(entry) {
 
   outerCard.setAttribute('class', 'card');
   titleSpanElement.setAttribute('class', 'title-font-size');
+  titleSpanElement.setAttribute('id', 'title-text');
 
   card.setAttribute('class', 'card-container');
   image.setAttribute('class', 'card-image');
@@ -289,6 +290,7 @@ function renderEntry(entry) {
   secondRow.setAttribute('class', 'row display');
   thirdRow.setAttribute('class', 'row display');
   authorSpan.setAttribute('class', 'author-font-size text-overflow');
+  authorSpan.setAttribute('id', 'author-text');
   header.setAttribute('class', 'card-header');
   image.setAttribute('src', bookImage);
   cardTextHolder.setAttribute('class', 'card-text-holder');
