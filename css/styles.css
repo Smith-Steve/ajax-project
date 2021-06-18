@@ -110,12 +110,15 @@ span#search-result-category {
 .modal-window,
 .modal-mobile-window {
   background-color: white;
-  margin: 5% auto;
   border-radius: 8px;
 }
 
+.text-content-modal > .row > .book-description {
+  display: none;
+}
+
 .modal-mobile-content-container {
-  margin-left: unset;
+  margin-left: -40px;
 }
 
 .modal-window {
@@ -126,7 +129,7 @@ span#search-result-category {
 
 .modal-mobile-window {
   width: 75%;
-  padding: 8px 8px 8px 8px;
+  padding: 4px 0 8px 8px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -231,8 +234,9 @@ h2 {
   font-size: 48px;
 }
 
-span.close {
+span.close.display-topright {
   font-size: 12px;
+  margin-left: -2px;
 }
 
 img.modal-photo {

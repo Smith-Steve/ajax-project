@@ -537,7 +537,7 @@ function modalMobileSetUp(event) {
   $modalWindow.querySelector('span.ISBN-modal').textContent = bookInformation.primary_isbn13;
   $modalWindow.querySelector('span.Publisher-modal').textContent = bookInformation.publisher;
   $modalImage.setAttribute('src', bookInformation.book_image);
-
+  $modalWindow.querySelector('span.book-description').textContent = bookInformation.description;
 }
 
 function addStorage(dataObject, book) {
