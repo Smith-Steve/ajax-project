@@ -24,5 +24,5 @@ New York Times Book Application is a simple platform designed for displaying to 
 ## Local environment set up.
 This application does not require any dependencies to get started.
 
-## Quick Gif. Wow!
+## Quick Gif.
 ![NY Times Book App](https://user-images.githubusercontent.com/51938797/121755687-ac6e9700-cacc-11eb-805f-b85d5f07843b.gif)
