@@ -119,8 +119,8 @@ span#search-result-category {
 }
 
 .modal-window {
+  display: flex;
   width: 50%;
-  height: 50%;
   padding: 16px 16px 0 16px;
 }
 
@@ -250,11 +250,18 @@ img.modal-photo:hover {
   transition: 0.3s ease-in;
 }
 
-.img-window {
+.img-window-mobile {
   position: static;
   float: left;
   margin-left: 5px;
   margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.img-window {
+  position: static;
+  margin-left: 5px;
+  margin-bottom: 15px;
 }
 
 .text-content-modal {
