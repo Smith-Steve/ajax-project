@@ -562,6 +562,7 @@ function modalMobileSetUp(event) {
   const $modalWindow = document.querySelector('.modal-mobile-window');
   mobileModalHeader.textContent = bookInformation.title;
   document.getElementById('mobile-modal-link').setAttribute('href', bookInformation.amazon_product_url);
+  document.getElementById('mobile-modal-link2').setAttribute('href', bookInformation.amazon_product_url);
 
   $modalWindow.querySelector('span.author-modal.mobile').textContent = bookInformation.author;
   $modalWindow.querySelector('span.ISBN-modal.mobile').textContent = bookInformation.primary_isbn13;
